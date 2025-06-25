@@ -1,20 +1,33 @@
 import React, { useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/features/user";
+import type { AxiosResponse } from "axios";
 
-interface LoginResponse {
-  token: string;
-  success: boolean;
-  organization: string;
+interface LoginUser {
+  id: string;
+  email: string;
   role: string;
+  phone: string;
+  isActive: boolean;
+  organization: string;
+  token: string;
 }
+interface LoginResponse {
+  data: {
+    success: boolean;
+    data: LoginUser;
+  };
+}
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
-  console.log(formData);
+  const dispatch = useDispatch();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -26,13 +39,17 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post<LoginResponse>(
+      
+      const response = await axiosInstance.post<AxiosResponse>(
         "v1/auth/login",
         formData
       ); // Adjust the route accordingly
-      console.log("Login success:", response.data);
+      // debugger
+      console.log(response.data.data, "resposne");
+      // console.log("Login success:", response.data);
+      dispatch(setUser(response.data.data));
       if (response.data?.success) {
-        navigate("/dashboard");
+        navigate("/dashboard/home");
       }
       // You can store token here if returned: localStorage.setItem("token", response.data.token);
     } catch (error: any) {

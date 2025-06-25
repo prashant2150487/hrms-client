@@ -7,6 +7,7 @@ import { SectionCards } from "./SectionCards"
 import { SiteHeader } from "./SiteHeader"
 
 export default function Dashboard() {
+  
   return (
     <SidebarProvider
       style={

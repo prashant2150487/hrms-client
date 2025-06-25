@@ -1,6 +1,5 @@
 // import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react"
 
-import { Button } from "@/components/ui/button";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -8,14 +7,16 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { PiIcon, PinIcon } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
 export type NavItem = {
   title: string;
   url: string;
   icon?: LucideIcon; // single source of truth
 };
 export function NavMain({ items }: { items: NavItem[] }) {
+  const { page } = useParams<{ page: string }>()
+  console.log(page,items)
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -26,12 +27,12 @@ export function NavMain({ items }: { items: NavItem[] }) {
               <SidebarMenuButton
                 asChild
                 tooltip={title}
-                className="bg-[#CAE162] rounded-md font-semibold p-2"
+                className={`bg-[#CAE162] rounded-md font-semibold p-2 hover:bg-gray-100 ${page==title.toLowerCase() ? "bg-[#CAE162]": "bg-white text-black"}`}
               >
-                <a href={url} className="flex items-center gap-2">
+                <Link to={url} className="flex items-center gap-2">
                   {Icon && <Icon className="h-4 w-4 shrink-0" />}
                   <span>{title}</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

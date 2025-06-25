@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sidebar"
 import { BadgeDollarSign, Compass, HeartHandshake, House, Icon, Inbox, User } from "lucide-react"
 import { NavMain } from "./NavMain"
-import { NavDocuments } from "./NavDocument"
+// import { NavDocuments } from "./NavDocument"
 import { NavSecondary } from "./NavSecondary"
 import { NavUser } from "./NavUser"
 
@@ -23,17 +23,17 @@ const data = {
   navMain: [
     {
       title: "Home",
-      url: "#",
+      url: "/dashboard/home",
       icon: House,
     },
     {
       title: "Me",
-      url: "#",
+      url: "/dashboard/me",
       icon: User,
     },
     {
       title: "Inbox",
-      url: "#",
+      url: "/dashboard/inbox",
       icon: Inbox,
     },
     {
