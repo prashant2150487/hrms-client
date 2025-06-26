@@ -1,10 +1,8 @@
 import Dashboard from "@/components/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -12,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { ArrowUpRight, Calendar1 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ClockInCard } from "./ClockInCard";
 
 const Home = () => {
   return (
@@ -43,60 +42,34 @@ const Home = () => {
             </CardAction>
           </CardHeader>
           <CardFooter className="mt-auto">
-              <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
-                <Avatar>
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <Avatar>
-                  <AvatarImage
-                    src="https://github.com/leerob.png"
-                    alt="@leerob"
-                  />
-                  <AvatarFallback>LR</AvatarFallback>
-                </Avatar>
-                <Avatar>
-                  <AvatarImage
-                    src="https://github.com/evilrabbit.png"
-                    alt="@evilrabbit"
-                  />
-                  <AvatarFallback>ER</AvatarFallback>
-                </Avatar>
-              </div>
-              
+            <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/leerob.png"
+                  alt="@leerob"
+                />
+                <AvatarFallback>LR</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/evilrabbit.png"
+                  alt="@evilrabbit"
+                />
+                <AvatarFallback>ER</AvatarFallback>
+              </Avatar>
+            </div>
+
             <h1 className="text-5xl font-bold ml-auto">289</h1>
           </CardFooter>
         </Card>
-        <Card className="border-0 bg-white rounded-3xl">
-          <CardHeader>
-            <CardTitle>
-              <Calendar1 />
-            </CardTitle>
-            <CardDescription className="font-semibold">
-              Time Today - Jun 26, 2025 Thu
-            </CardDescription>
-            <CardAction className="bg-white rounded-full p-1 cursor-pointer hover:bg-gray-200">
-              <ArrowUpRight className="size-5 text-gray-400" />
-            </CardAction>
-          </CardHeader>
-          <CardContent>
-            <div>
-              <p className="text-xs font-normal">CURRENT TIME</p>
-              <h3 className="text-2xl font-bold">08:40:56am</h3>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button
-              className="bg-violet-200 ml-auto cursor-pointer"
-              variant="secondary"
-            >
-              Web Clock in
-            </Button>
-          </CardFooter>
-        </Card>
+        <ClockInCard />
         <Card className="border-0 bg-white rounded-3xl"></Card>
         <Card className="border-0 bg-white rounded-3xl"></Card>
       </div>
