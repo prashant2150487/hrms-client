@@ -1,4 +1,3 @@
-
 import {
   Sidebar,
   SidebarContent,
@@ -7,12 +6,21 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { BadgeDollarSign, Compass, HeartHandshake, House, Icon, Inbox, User } from "lucide-react"
-import { NavMain } from "./NavMain"
+} from "@/components/ui/sidebar";
+import {
+  BadgeDollarSign,
+  Compass,
+  HeartHandshake,
+  House,
+  Icon,
+  Inbox,
+  PersonStanding,
+  User,
+} from "lucide-react";
+import { NavMain } from "./NavMain";
 // import { NavDocuments } from "./NavDocument"
-import { NavSecondary } from "./NavSecondary"
-import { NavUser } from "./NavUser"
+import { NavSecondary } from "./NavSecondary";
+import { NavUser } from "./NavUser";
 
 const data = {
   user: {
@@ -46,11 +54,11 @@ const data = {
       url: "#",
       icon: BadgeDollarSign,
     },
-    // {
-    //   title: "Org",
-    //   url: "#",
-    //   icon: Icon,
-    // },
+    {
+      title: "Admin",
+      url: "/dashboard/admin",
+      icon: PersonStanding
+    },
     // {
     //   title: "Engage",
     //   url: "#",
@@ -144,7 +152,7 @@ const data = {
       icon: Icon,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -173,5 +181,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
