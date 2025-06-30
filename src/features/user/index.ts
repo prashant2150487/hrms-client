@@ -10,13 +10,14 @@ interface User {
   token: string;
   firstName: string;
   lastName: string;
+
 }
 interface UserState {
   user: User | null;
 }
 
 const initialState: UserState = {
-  user: null,
+  user: null
 };
 
 const userSlice = createSlice({
@@ -26,9 +27,11 @@ const userSlice = createSlice({
     setUser(state, action: PayloadAction<User>) {
       console.log(action.payload);
       state.user = { ...action.payload };
+      localStorage.setItem("token", action.payload.token);
     },
     clearUser(state) {
       state.user = null;
+      // localStorage.removeItem("token");
     },
   },
 });

@@ -1,6 +1,6 @@
 import Dashboard from "@/components/sidebar";
 
-const OnBoar = () => {
+const Admin = () => {
   return <Dashboard>Admin</Dashboard>;
 };
 

@@ -8,11 +8,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import axiosInstance from "@/lib/axios";
 import { ArrowUpRight, Calendar1 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export const ClockInCard = () => {
   const [currentTime, setCurrentTime] = useState<string>("");
+  const [isClockedIn, setIsClockedIn] = useState<boolean>(false);
 
   // Store today's date once on component mount
   const today = useRef(new Date().toDateString());
@@ -37,7 +39,33 @@ export const ClockInCard = () => {
       }
     };
   }, []);
+  useEffect(() => {
+    const fetchClockInStatus = async () => {
+      try {
+        const response = await axiosInstance("/v1/attendance/status");
 
+        setIsClockedIn(response.data.isClockedIn);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchClockInStatus();
+  }, []);
+  console.log(isClockedIn, "is");
+
+  const handClockClick = async () => {
+    try {
+      if (isClockedIn) {
+        const response = await axiosInstance("/v1/attendance/webClockOut");
+        console.log(response);
+      } else {
+        const response = await axiosInstance("/v1/attendance/webClockIn");
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Card className="border-0 bg-white rounded-3xl">
       <CardHeader>
@@ -61,10 +89,11 @@ export const ClockInCard = () => {
 
       <CardFooter>
         <Button
-          className="bg-violet-200 ml-auto cursor-pointer"
+          className="bg-violet-200 ml-auto cursor-pointer hover:bg-violet-300"
           variant="secondary"
+          onClick={() => handClockClick()}
         >
-          Web Clock in
+          {isClockedIn ? "Clock Out" : "web clock In"}
         </Button>
       </CardFooter>
     </Card>
