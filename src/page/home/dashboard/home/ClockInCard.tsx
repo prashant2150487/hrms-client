@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import axiosInstance from "@/lib/axios";
+import { getCurrentLocation } from "@/utils/getCurrentLocation";
 import { ArrowUpRight, Calendar1 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -39,27 +40,33 @@ export const ClockInCard = () => {
       }
     };
   }, []);
-  useEffect(() => {
-    const fetchClockInStatus = async () => {
-      try {
-        const response = await axiosInstance("/v1/attendance/status");
+  const fetchClockInStatus = async () => {
+    try {
+      const response = await axiosInstance("/v1/attendance/status");
 
-        setIsClockedIn(response.data.isClockedIn);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      setIsClockedIn(response.data.isClockIn);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
     fetchClockInStatus();
   }, []);
   console.log(isClockedIn, "is");
 
   const handClockClick = async () => {
     try {
+      const { latitude, longitude } = await getCurrentLocation();
       if (isClockedIn) {
-        const response = await axiosInstance("/v1/attendance/webClockOut");
+        const response = await axiosInstance.post("/v1/attendance/webClockOut");
+        fetchClockInStatus();
         console.log(response);
       } else {
-        const response = await axiosInstance("/v1/attendance/webClockIn");
+        const response = await axiosInstance.post("/v1/attendance/webCLockIn", {
+          latitude,
+          longitude,
+        });
+        fetchClockInStatus();
         console.log(response);
       }
     } catch (error) {
