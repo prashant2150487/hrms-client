@@ -15,7 +15,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import type { RootState } from "@/store";
-import { Icon, PiIcon } from "lucide-react";
+import { PiIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 
 export function NavUser({

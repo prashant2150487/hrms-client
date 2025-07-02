@@ -21,6 +21,9 @@ import { NavMain } from "./NavMain";
 // import { NavDocuments } from "./NavDocument"
 import { NavSecondary } from "./NavSecondary";
 import { NavUser } from "./NavUser";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store";
+import { useMemo } from "react";
 
 const data = {
   user: {
@@ -49,16 +52,7 @@ const data = {
       url: "#",
       icon: HeartHandshake,
     },
-    {
-      title: "My Finance",
-      url: "#",
-      icon: BadgeDollarSign,
-    },
-    {
-      title: "Admin",
-      url: "/dashboard/admin",
-      icon: PersonStanding
-    },
+
     // {
     //   title: "Engage",
     //   url: "#",
@@ -155,6 +149,18 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const userData = useSelector((state: RootState) => state.userInfo.user);
+  const navMain = useMemo(() => {
+    const items = [...data.navMain];
+    if (userData?.role == "admin") {
+      items.push({
+        title: "Admin",
+        url: "/dashboard/admin",
+        icon: PersonStanding,
+      });
+    }
+    return items;
+  }, [userData]);
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader className="">
@@ -173,7 +179,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent className="">
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
         {/* <NavDocuments items={data.documents} /> */}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
