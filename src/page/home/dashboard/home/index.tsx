@@ -9,25 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ArrowUpRight, Calendar1 } from "lucide-react";
-import { Link } from "react-router-dom";
 import { ClockInCard } from "./ClockInCard";
+import SecondaryHeader from "@/components/SecondaryHeader";
 
+const data = ["Dashboard", "Me", ];
 const Home = () => {
   return (
     <Dashboard>
-      <div className="bg-gray-200 px-4 py-2 border-b-2 ">
-        <div className="flex gap-4 font-medium text-sm">
-          <Link to="/dashboard/home">Dashboard</Link>
-          <Link to="/dashboard/me">Welcome</Link>
-        </div>
-      </div>
-      {/* <div className="bg-gray-200 px-4 py-2 border-b-2 ">
-        <div className="flex gap-4  font-medium text-sm">
-          <Link to="/dashboard/home">My Salary</Link>
-          <Link to="/dashboard/me">income Tex</Link>
-          <Link to="/dashboard/inbox">Pay Slip</Link>
-        </div>
-      </div> */}
+      <SecondaryHeader data={data} />
       <div className="grid grid-cols-4 gap-4 p-4">
         <Card className="border-0 bg-white rounded-3xl">
           <CardHeader>
