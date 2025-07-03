@@ -10,14 +10,15 @@ interface User {
   token: string;
   firstName: string;
   lastName: string;
-
 }
 interface UserState {
   user: User | null;
+  isLoggedIn: boolean;
 }
 
 const initialState: UserState = {
-  user: null
+  user: null,
+  isLoggedIn: false,
 };
 
 const userSlice = createSlice({
@@ -25,13 +26,14 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<User>) {
-      console.log(action.payload);
       state.user = { ...action.payload };
+      state.isLoggedIn = true;
       localStorage.setItem("token", action.payload.token);
     },
     clearUser(state) {
       state.user = null;
-      // localStorage.removeItem("token");
+      state.isLoggedIn = false;
+      localStorage.removeItem("token");
     },
   },
 });

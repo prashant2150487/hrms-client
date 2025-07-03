@@ -24,6 +24,7 @@ import { NavUser } from "./NavUser";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 
 const data = {
   user: {
@@ -170,10 +171,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <Link to="/">
                 <Compass className="!size-5" />
                 <span className="text-base font-semibold">Smart HR</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

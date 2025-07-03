@@ -4,6 +4,7 @@ import Login from "@/components/signin";
 import Home from "@/page/home/dashboard/home";
 import Admin from "@/page/home/dashboard/admin";
 import HomePage from "@/page/homepage";
+import { Protect } from "./protectedRoutes";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,13 +20,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard/:page",
-    element: <Home />,
+    element: (
+      <Protect>
+        <Home />
+      </Protect>
+    ),
   },
   {
     path: "/dashboard/admin",
-    element: <Admin/>,
+    element: <Admin />,
   },
-  
 ]);
 
 export default router;

@@ -43,10 +43,7 @@ const Login = () => {
       const response = await axiosInstance.post<AxiosResponse>(
         "v1/auth/login",
         formData
-      ); // Adjust the route accordingly
-      // debugger
-      // console.log(response.data.data, "resposne");
-      // console.log("Login success:", response.data);
+      ); 
       dispatch(setUser(response.data.data));
       if (response.data?.success) {
         navigate("/dashboard/home");
