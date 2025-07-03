@@ -14,9 +14,12 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { clearUser } from "@/features/user";
 import type { RootState } from "@/store";
-import { PiIcon } from "lucide-react";
+import { LogOut, PiIcon } from "lucide-react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function NavUser({
   user,
@@ -28,9 +31,15 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userData = useSelector((state: RootState) => state.userInfo.user);
   console.log(userData, "redux");
-
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    dispatch(clearUser());
+    navigate("/login");
+  };
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -41,7 +50,10 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar} alt={userData?.firstName || "null"} />
+                <AvatarImage
+                  src={user.avatar}
+                  alt={userData?.firstName || "null"}
+                />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -90,9 +102,9 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <PiIcon />
+            <DropdownMenuSeparator className="border-gray-50" />
+            <DropdownMenuItem onClick={handleLogOut} className="cursor-pointer hover:bg-gray-200">
+              <LogOut />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

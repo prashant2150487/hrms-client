@@ -5,7 +5,10 @@ interface ProtectProps {
   children: React.ReactNode;
 }
 export const Protect = ({ children }: ProtectProps) => {
-  const { isLoggedIn } = useSelector((state: RootState) => state.userInfo);
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.userInfo.isLoggedIn
+  );
+
 
   return isLoggedIn ? <>{children}</> : <Navigate to="/login" />;
 };

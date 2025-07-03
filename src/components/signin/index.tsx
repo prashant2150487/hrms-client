@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/features/user";
 import type { AxiosResponse } from "axios";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store";
 
 interface LoginUser {
   id: string;
@@ -28,6 +30,9 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const  isLoggedIn  = useSelector((state: RootState) => state.userInfo.isLoggedIn);
+  console.log(isLoggedIn,"value");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({

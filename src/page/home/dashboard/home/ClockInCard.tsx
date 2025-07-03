@@ -52,7 +52,6 @@ export const ClockInCard = () => {
   useEffect(() => {
     fetchClockInStatus();
   }, []);
-  console.log(isClockedIn, "is");
 
   const handClockClick = async () => {
     try {

@@ -16,7 +16,6 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       <SidebarInset className="bg-[#F6F4F3]">
         <SiteHeader />
         <div>{children}</div>
-        
       </SidebarInset>
     </SidebarProvider>
   );
