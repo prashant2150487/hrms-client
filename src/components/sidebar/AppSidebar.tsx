@@ -35,7 +35,7 @@ const data = {
   navMain: [
     {
       title: "Home",
-      url: "/dashboard/home",
+      url: "/home/dashboard",
       icon: House,
     },
     {
@@ -156,7 +156,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     if (userData?.role == "admin") {
       items.push({
         title: "Admin",
-        url: "/dashboard/admin",
+        url: "/admin/onboard",
         icon: PersonStanding,
       });
     }

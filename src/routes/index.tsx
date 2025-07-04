@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/dashboard/:page",
+    path: "/home/dashboard",
     element: (
       // <Protect>
         <Home />
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/dashboard/admin/onboard",
+    path: "/admin/onboard",
     element: <Onboard />,
   },
 ]);
