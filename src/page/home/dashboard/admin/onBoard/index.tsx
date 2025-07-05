@@ -28,16 +28,19 @@ import axiosInstance from "@/lib/axios";
 const data = ["Onboard"];
 
 const initialFormData = {
-  firstName: "Ashish",
-  lastName: "Sharma",
+  firstName: "",
+  lastName: "",
   password: "Psachan04@",
-  email: "ashish@lucent.com",
-  phone: "9976543210",
-  role: "employee",
+  email: "",
+  phone: "",
+  role: "",
   department: "Engineering",
   designation: "Backend Developer",
-  startDate: "2025-06-27",
+  startDate: "",
   location: "Delhi",
+  panCard: "",
+  aadharCard: "",
+  uanNumber: "",
 };
 
 const onboardData = [
@@ -78,7 +81,7 @@ const Onboard = () => {
     e.preventDefault();
 
     try {
-      const res = await axiosInstance.post("/admin/users", formData);
+      const res = await axiosInstance.post("/v1/admin/users", formData);
 
       alert("Candidate added successfully");
 
@@ -218,6 +221,37 @@ const Onboard = () => {
                       onChange={handleChange}
                     />
                   </div>
+                </div>
+                {/* Row 6 - panCard, aadharCard */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="panCard">PAN Card</Label>
+                    <Input
+                      id="panCard"
+                      name="panCard"
+                      value={formData.panCard}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="aadharCard">Aadhaar Card</Label>
+                    <Input
+                      id="aadharCard"
+                      name="aadharCard"
+                      value={formData.aadharCard}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                {/* Row 7 - uanNumber */}
+                <div className="grid gap-2">
+                  <Label htmlFor="uanNumber">UAN Number</Label>
+                  <Input
+                    id="uanNumber"
+                    name="uanNumber"
+                    value={formData.uanNumber}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
 

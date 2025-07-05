@@ -51,7 +51,7 @@ const Login = () => {
       ); 
       dispatch(setUser(response.data.data));
       if (response.data?.success) {
-        navigate("/dashboard/home");
+        navigate("/home/dashboard");
       }
       // You can store token here if returned: localStorage.setItem("token", response.data.token);
     } catch (error: any) {
