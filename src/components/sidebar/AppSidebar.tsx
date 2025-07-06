@@ -40,7 +40,7 @@ const data = {
     },
     {
       title: "Me",
-      url: "/dashboard/me",
+      url: "/me/attendance",
       icon: User,
     },
     {
@@ -159,6 +159,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/admin/onboard",
         icon: PersonStanding,
       });
+    }else if(userData?.role==="superadmin"){
+      items.push({
+        title: "Super Admin",
+        url: "/super-admin/onboard",
+        icon: PersonStanding,
+      });
+
     }
     return items;
   }, [userData]);

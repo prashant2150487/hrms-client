@@ -6,6 +6,8 @@ import Admin from "@/page/home/dashboard/admin/onBoard";
 import HomePage from "@/page/homepage";
 import { Protect } from "./protectedRoutes";
 import Onboard from "@/page/home/dashboard/admin/onBoard";
+import Attendance from "@/page/me/attendence";
+import Dashboard from "@/components/sidebar";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,13 +25,21 @@ const router = createBrowserRouter([
     path: "/home/dashboard",
     element: (
       // <Protect>
-        <Home />
-    //  </Protect>
+      <Home />
+      //  </Protect>
     ),
   },
   {
     path: "/admin/onboard",
     element: <Onboard />,
+  },
+  {
+    path: "/me/attendance",
+    element: (
+      <Dashboard>
+        <Attendance />
+      </Dashboard>
+    ),
   },
 ]);
 
