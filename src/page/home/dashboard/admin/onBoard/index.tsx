@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SecondaryHeader from "@/components/SecondaryHeader";
 import Dashboard from "@/components/sidebar";
 import { Button } from "@/components/ui/button";
@@ -72,6 +72,7 @@ const onboardData = [
 
 const Onboard = () => {
   const [formData, setFormData] = useState(initialFormData);
+  const [users, setUsers] = useState([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -94,6 +95,19 @@ const Onboard = () => {
     }
   };
 
+  const fetchUserData = async () => {
+    try {
+      const res = await axiosInstance.get("/v1/admin/users");
+      console.log("1111111111111");
+      setUsers(res.data?.data);
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  console.log(users, "user");
   return (
     <Dashboard>
       <SecondaryHeader data={data} />
@@ -287,14 +301,14 @@ const Onboard = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {onboardData.map((item, idx) => (
+          {users?.map((item, idx) => (
             <TableRow key={idx}>
               <TableCell>
                 <Checkbox />
               </TableCell>
               <TableCell>{item.firstName}</TableCell>
               <TableCell>{item.lastName}</TableCell>
-              <TableCell>{item.emailId}</TableCell>
+              <TableCell>{item.email}</TableCell>
               <TableCell className="text-right">{item.officialEmail}</TableCell>
               <TableCell>{item.department}</TableCell>
               <TableCell>{item.sourceHire}</TableCell>
