@@ -24,6 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import axiosInstance from "@/lib/axios";
+import { Ellipsis } from "lucide-react";
 
 const data = ["Onboard"];
 
@@ -73,6 +74,8 @@ const onboardData = [
 const Onboard = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [users, setUsers] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -88,6 +91,8 @@ const Onboard = () => {
 
       // Optionally reset form
       setFormData(initialFormData);
+      setDialogOpen(false);
+      fetchUserData()
 
       // You can refresh or update onboardData here dynamically if needed
     } catch (err: any) {
@@ -98,7 +103,6 @@ const Onboard = () => {
   const fetchUserData = async () => {
     try {
       const res = await axiosInstance.get("/v1/admin/users");
-      console.log("1111111111111");
       setUsers(res.data?.data);
     } catch (err: any) {
       console.log(err.message);
@@ -107,12 +111,12 @@ const Onboard = () => {
   useEffect(() => {
     fetchUserData();
   }, []);
-  console.log(users, "user");
+  // console.log(users, "user");
   return (
     <Dashboard>
       <SecondaryHeader data={data} />
       <div className="flex justify-end w-full mb-4">
-        <Dialog>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button variant="outline">Add Candidate</Button>
           </DialogTrigger>
@@ -252,6 +256,7 @@ const Onboard = () => {
                     <Input
                       id="aadharCard"
                       name="aadharCard"
+                      type="number"
                       value={formData.aadharCard}
                       onChange={handleChange}
                     />
@@ -315,7 +320,7 @@ const Onboard = () => {
               <TableCell className="text-right">{item.panCard}</TableCell>
               <TableCell className="text-right">{item.aadhaarCard}</TableCell>
               <TableCell>{item.uanNumber}</TableCell>
-              <TableCell className="text-right">{item.action}</TableCell>
+              <TableCell className="text-right"><Ellipsis/></TableCell>
             </TableRow>
           ))}
         </TableBody>

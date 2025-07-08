@@ -34,7 +34,6 @@ export function NavUser({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state: RootState) => state.userInfo.user);
-  console.log(userData, "redux");
   const handleLogOut = () => {
     localStorage.removeItem("token");
     dispatch(clearUser());

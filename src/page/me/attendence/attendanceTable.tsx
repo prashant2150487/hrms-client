@@ -209,7 +209,6 @@ const AttendanceTable: React.FC = () => {
   useEffect(()=>{
     fetchAttendanceData()
   },[])
-  console.log(attendanceData)
   return (
     <div className="min-h-screen bg-slate-900 text-white p-4">
       <Card className="bg-slate-800 border-slate-700">

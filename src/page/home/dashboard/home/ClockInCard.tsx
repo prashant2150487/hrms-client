@@ -59,14 +59,12 @@ export const ClockInCard = () => {
       if (isClockedIn) {
         const response = await axiosInstance.post("/v1/attendance/webClockOut");
         fetchClockInStatus();
-        console.log(response);
       } else {
         const response = await axiosInstance.post("/v1/attendance/webCLockIn", {
           latitude,
           longitude,
         });
         fetchClockInStatus();
-        console.log(response);
       }
     } catch (error) {
       console.log(error);
