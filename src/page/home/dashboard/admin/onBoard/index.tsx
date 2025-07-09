@@ -24,7 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import axiosInstance from "@/lib/axios";
-import { Delete, DeleteIcon, Ellipsis } from "lucide-react";
+import {  Ellipsis, Trash } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,32 +53,7 @@ const initialFormData = {
   uanNumber: "",
 };
 
-const onboardData = [
-  {
-    firstName: "John",
-    lastName: "Doe",
-    emailId: "john.doe@gmail.com",
-    officialEmail: "john.doe@company.com",
-    department: "HR",
-    sourceHire: "LinkedIn",
-    panCard: "ABCDE1234F",
-    aadhaarCard: "1234-5678-9012",
-    uanNumber: "100200300400",
-    action: "View",
-  },
-  {
-    firstName: "Jane",
-    lastName: "Smith",
-    emailId: "jane.smith@gmail.com",
-    officialEmail: "jane.smith@company.com",
-    department: "Finance",
-    sourceHire: "Referral",
-    panCard: "XYZAB9876K",
-    aadhaarCard: "2345-6789-0123",
-    uanNumber: "200300400500",
-    action: "View",
-  },
-];
+
 
 const Onboard = () => {
   const [formData, setFormData] = useState(initialFormData);
@@ -332,7 +307,7 @@ const Onboard = () => {
                   <DropdownMenuTrigger asChild>
                     <Ellipsis />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56 bg-white">
+                  <DropdownMenuContent align="start" className="w-56 bg-white border-none shadow-lg p-2 mr-15">
                     <DropdownMenuGroup>
                       <DropdownMenuItem>
                         Edit
@@ -342,7 +317,7 @@ const Onboard = () => {
 
                       <DropdownMenuItem>
                         Delete
-                        <DropdownMenuShortcut><DeleteIcon/></DropdownMenuShortcut>
+                        <DropdownMenuShortcut><Trash/></DropdownMenuShortcut>
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
                   </DropdownMenuContent>

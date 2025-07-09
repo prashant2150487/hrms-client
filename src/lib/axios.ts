@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const rawBaseURL ="http://localhost:5000";
+const rawBaseURL ="https://hrms-be-mu.vercel.app/";
 const baseURL = `${rawBaseURL.replace(/\/$/, "")}/api`;
 
 const axiosInstance = axios.create({

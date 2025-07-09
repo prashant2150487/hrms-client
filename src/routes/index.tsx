@@ -8,6 +8,7 @@ import { Protect } from "./protectedRoutes";
 import Onboard from "@/page/home/dashboard/admin/onBoard";
 import Attendance from "@/page/me/attendence";
 import Dashboard from "@/components/sidebar";
+import Leave from "@/page/me/leave";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
     element: (
       <Dashboard>
         <Attendance />
+      </Dashboard>
+    ),
+  },
+  {
+    path: "/me/leave",
+    element: (
+      <Dashboard>
+        <Leave />
       </Dashboard>
     ),
   },
