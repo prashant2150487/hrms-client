@@ -24,7 +24,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import axiosInstance from "@/lib/axios";
-import { Ellipsis } from "lucide-react";
+import { Delete, DeleteIcon, Ellipsis } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 
 const data = ["Onboard"];
 
@@ -76,7 +85,6 @@ const Onboard = () => {
   const [users, setUsers] = useState([]);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -92,7 +100,7 @@ const Onboard = () => {
       // Optionally reset form
       setFormData(initialFormData);
       setDialogOpen(false);
-      fetchUserData()
+      fetchUserData();
 
       // You can refresh or update onboardData here dynamically if needed
     } catch (err: any) {
@@ -256,7 +264,6 @@ const Onboard = () => {
                     <Input
                       id="aadharCard"
                       name="aadharCard"
-                      type="number"
                       value={formData.aadharCard}
                       onChange={handleChange}
                     />
@@ -320,7 +327,27 @@ const Onboard = () => {
               <TableCell className="text-right">{item.panCard}</TableCell>
               <TableCell className="text-right">{item.aadhaarCard}</TableCell>
               <TableCell>{item.uanNumber}</TableCell>
-              <TableCell className="text-right"><Ellipsis/></TableCell>
+              <TableCell className="text-right">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Ellipsis />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-56 bg-white">
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem>
+                        Edit
+                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                      <Separator orientation="horizontal" className="border-t border-gray-400" />
+
+                      <DropdownMenuItem>
+                        Delete
+                        <DropdownMenuShortcut><DeleteIcon/></DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
