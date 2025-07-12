@@ -8,8 +8,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import axiosInstance from "@/lib/axios";
 
-const DropDownAction = () => {
+const DropDownAction = ({userId,fetchUserData}) => {
+  console.log(userId,"diksha")
+  const handleDelete = async () => {
+    try {
+      const response = await axiosInstance.delete(`/v1/admin/users/${userId}`);
+      fetchUserData()
+      console.log(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,7 +41,10 @@ const DropDownAction = () => {
             className="border-t border-gray-300"
           />
 
-          <DropdownMenuItem className="cursor-pointer hover:bg-gray-100">
+          <DropdownMenuItem
+            onClick={() => handleDelete()}
+            className="cursor-pointer hover:bg-gray-100"
+          >
             Delete
             <DropdownMenuShortcut>
               <Trash />
