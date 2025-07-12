@@ -25,19 +25,6 @@ interface AttendanceRecord {
   hasLocation?: boolean;
 }
 
-const attendanceData: AttendanceRecord[] = [
-  {
-    date: '05 Jul',
-    dayOfWeek: 'Sat',
-    attendancePercentage: 0,
-    effectiveHours: 'Full day Weekly-off',
-    grossHours: '-',
-    arrivalStatus: 'On Time',
-    specialStatus: 'W-OFF',
-    statusType: 'weekly-off'
-  }
-  
-];
 
 const AttendanceTable: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('30 DAYS');

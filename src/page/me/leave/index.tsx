@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pie, PieChart, Sector, Cell } from "recharts";
-import { PieSectorDataItem } from "recharts/types/polar/Pie";
 
 const chartData = [
 	{ browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },

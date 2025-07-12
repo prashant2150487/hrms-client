@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import SecondaryHeader from "@/components/SecondaryHeader";
 import Dashboard from "@/components/sidebar";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogClose,
@@ -15,25 +14,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import axiosInstance from "@/lib/axios";
-import {  Ellipsis, Trash } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
+import AdminUserTable from "./AdminUserTable";
 
 const data = ["Onboard"];
 
@@ -52,8 +34,6 @@ const initialFormData = {
   aadharCard: "",
   uanNumber: "",
 };
-
-
 
 const Onboard = () => {
   const [formData, setFormData] = useState(initialFormData);
@@ -269,64 +249,7 @@ const Onboard = () => {
         </Dialog>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>
-              <Checkbox />
-            </TableHead>
-            <TableHead>First Name</TableHead>
-            <TableHead>Last Name</TableHead>
-            <TableHead>Email Id</TableHead>
-            <TableHead className="text-right">Official Email</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead>Source Hire</TableHead>
-            <TableHead className="text-right">PAN card number</TableHead>
-            <TableHead className="text-right">Aadhaar card number</TableHead>
-            <TableHead>UAN number</TableHead>
-            <TableHead className="text-right">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {users?.map((item, idx) => (
-            <TableRow key={idx}>
-              <TableCell>
-                <Checkbox />
-              </TableCell>
-              <TableCell>{item.firstName}</TableCell>
-              <TableCell>{item.lastName}</TableCell>
-              <TableCell>{item.email}</TableCell>
-              <TableCell className="text-right">{item.officialEmail}</TableCell>
-              <TableCell>{item.department}</TableCell>
-              <TableCell>{item.sourceHire}</TableCell>
-              <TableCell className="text-right">{item.panCard}</TableCell>
-              <TableCell className="text-right">{item.aadhaarCard}</TableCell>
-              <TableCell>{item.uanNumber}</TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Ellipsis />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56 bg-white border-none shadow-lg p-2 mr-15">
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem>
-                        Edit
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                      </DropdownMenuItem>
-                      <Separator orientation="horizontal" className="border-t border-gray-400" />
-
-                      <DropdownMenuItem>
-                        Delete
-                        <DropdownMenuShortcut><Trash/></DropdownMenuShortcut>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <AdminUserTable users={users} />
     </Dashboard>
   );
 };
