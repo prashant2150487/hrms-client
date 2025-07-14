@@ -1,9 +1,10 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 const LeaveHistory = () => {
   return (
     <>
-      <div className="max-w-md mx-auto bg-white rounded-2xl shadow-md p-6 space-y-5">
+      <div className="col-span-5  bg-white rounded-2xl shadow-md p-6 space-y-5">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold text-gray-800">Leave History</h2>
           <Button
@@ -17,78 +18,74 @@ const LeaveHistory = () => {
         {/* <div className="flex flex-col gap-2 items-start"> */}
         <div className="flex items-start justify-between">
           <div className="flex flex-col gap-1">
-            <h2 className="text-gray-600 text-xl font-semibold">
+            <h2 className="text-gray-600 text-medium font-semibold">
               Casual/Sick Leave
             </h2>
-            <p className="text-gray-300 text-[17px] font-normal">
+            <p className="text-gray-300 text-sm font-normal">
               Medial Emergency
             </p>
           </div>
           <div className="flex gap-2 justify-between items-start">
-            <Button variant="secondary" className=" shadow rounded-full">
+            <Badge className="bg-gray-200 rounded-full text-xs">
               Sep 28,2023
-            </Button>
-
-            <div className="flex flex-wrap items-center gap-2 md:flex-row">
-              <Button className="bg-green-200 rounded-full">Approved</Button>
-            </div>
+            </Badge>
+            <Badge className="bg-green-200 rounded-full text-xs">
+              Approved
+            </Badge>
           </div>
         </div>
         <div className="flex items-start justify-between">
           <div className="flex flex-col gap-1">
-            <h2 className="text-gray-600 text-xl font-semibold">
+            <h2 className="text-gray-600 text-medium font-semibold">
               Earned Leave
             </h2>
-            <p className="text-gray-300 text-[17px] font-normal">
+            <p className="text-gray-300 text-sm font-normal">
               Medial Emergency
             </p>
           </div>
           <div className="flex gap-2 justify-between items-start">
-            <Button variant="secondary" className=" shadow rounded-full">
+            <Badge className="bg-gray-200 rounded-full text-xs">
               Sep 28,2023
-            </Button>
-
-            <div className="flex flex-wrap items-center gap-2 md:flex-row">
-              <Button className="bg-pink-100 rounded-full">Pending</Button>
-            </div>
+            </Badge>
+            <Badge className="bg-green-200 rounded-full text-xs">
+              Approved
+            </Badge>
           </div>
         </div>
         <div className="flex items-start justify-between">
           <div className="flex flex-col gap-1">
-            <h2 className="text-gray-600 text-xl font-semibold">
+            <h2 className="text-gray-600 text-medium font-semibold">
               Earned Leave
             </h2>
-            <p className="text-gray-300 text-[17px] font-normal">
+            <p className="text-gray-300 text-sm font-normal">
               Medial Emergency
             </p>
           </div>
           <div className="flex gap-2 justify-between items-start">
-            <Button variant="secondary" className=" shadow rounded-full">
+            <Badge className="bg-gray-200 rounded-full text-xs">
               Sep 28,2023
-            </Button>
-
-            <div className="flex flex-wrap items-center gap-2 md:flex-row">
-              <Button className="bg-green-200 rounded-full">Approved</Button>
-            </div>
+            </Badge>
+            <Badge className="bg-green-200 rounded-full text-xs">
+              Approved
+            </Badge>
           </div>
         </div>
         <div className="flex items-start justify-between">
           <div className="flex flex-col gap-1">
-            <h2 className="text-gray-600 text-xl font-semibold">
+            <h2 className="text-gray-600 text-medium font-semibold">
               Earned Leave
             </h2>
-            <p className="text-gray-300 text-[17px] font-normal">
+            <p className="text-gray-300 text-sm font-normal">
               Medial Emergency
             </p>
           </div>
           <div className="flex gap-2 justify-between items-start">
-            <Button variant="secondary" className=" shadow rounded-full">
+            <Badge className="bg-gray-200 rounded-full text-xs">
               Sep 28,2023
-            </Button>
-
-            <div className="flex flex-wrap items-center gap-2 md:flex-row">
-              <Button className="bg-pink-100 rounded-full">Pending</Button>
-            </div>
+            </Badge>
+            <Badge className="bg-green-200 rounded-full text-xs">
+              Approved
+            </Badge>
           </div>
         </div>
         {/* </div> */}

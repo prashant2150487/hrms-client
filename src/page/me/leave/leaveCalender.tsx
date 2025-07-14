@@ -37,7 +37,7 @@ export default function LeaveCalender() {
   ];
 
   return (
-    <div className="max-w-md mx-auto p-6 rounded-2xl bg-gray-50 ">
+    <div className="col-span-4  p-6 rounded-2xl bg-white">
       <h1 className="text-2xl font-semibold text-gray-800 mb-6">
         Leave Calendar
       </h1>
@@ -47,12 +47,12 @@ export default function LeaveCalender() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div
-                  className={`${entry.bgColor} rounded-lg p-3 text-center min-w-[60px]`}
+                  className={`${entry.bgColor} rounded-lg p-1 text-center min-w-[55px]`}
                 >
-                  <div className="text-lg font-semibold text-gray-800">
+                  <div className="text-medium font-semibold text-gray-800">
                     {entry.date}
                   </div>
-                  <div className="text-sm text-gray-600">{entry.month}</div>
+                  <div className="text-xs text-gray-600">{entry.month}</div>
                 </div>
 
                 <div>
