@@ -8,7 +8,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import {
-  BadgeDollarSign,
   Compass,
   HeartHandshake,
   House,
