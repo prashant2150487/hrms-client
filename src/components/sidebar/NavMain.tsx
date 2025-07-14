@@ -8,14 +8,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import type { LucideIcon } from "lucide-react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 export type NavItem = {
   title: string;
   url: string;
   icon?: LucideIcon; // single source of truth
 };
 export function NavMain({ items }: { items: NavItem[] }) {
-  const { page } = useParams<{ page: string }>()
   const location=useLocation();
   const segments=location.pathname.split("/")?.filter(Boolean);
    const section = segments[0];
