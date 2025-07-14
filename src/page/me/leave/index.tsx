@@ -1,6 +1,7 @@
 // import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 // import { Pie, PieChart, Sector, Cell } from "recharts";
 
+import LeaveCalender from "./leaveCalender";
 import LeaveHistory from "./leaveHistory";
 
 // const chartData = [
@@ -52,6 +53,7 @@ const Leave = () => {
 		</div> */}
 		
 <LeaveHistory />
+<LeaveCalender/>
 		</>
 		
 		
