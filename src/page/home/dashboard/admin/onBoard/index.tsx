@@ -249,7 +249,7 @@ const Onboard = () => {
         </Dialog>
       </div>
 
-      <AdminUserTable users={users} />
+      <AdminUserTable users={users} fetchUserData={fetchUserData} />
     </Dashboard>
   );
 };

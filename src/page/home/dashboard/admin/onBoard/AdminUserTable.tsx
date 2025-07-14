@@ -11,7 +11,8 @@ import {
 import DropDownAction from "./DropDownAction";
 import { Badge } from "@/components/ui/badge";
 
-const AdminUserTable = ({ users }) => {
+const AdminUserTable = ({ users,fetchUserData }) => {
+  console.log(users,"gfhgfhgf")
   return (
     <div>
       <Table>
@@ -58,7 +59,7 @@ const AdminUserTable = ({ users }) => {
               <TableCell className="text-right">{item.aadhaarCard}</TableCell>
               <TableCell>{item.uanNumber}</TableCell>
               <TableCell className="text-right">
-                <DropDownAction />
+                <DropDownAction  userId={item._id} fetchUserData={fetchUserData}/>
               </TableCell>
             </TableRow>
           ))}
