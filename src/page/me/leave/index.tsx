@@ -1,7 +1,9 @@
 // import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 // import { Pie, PieChart, Sector, Cell } from "recharts";
 
+import LeaveCalender from "./leaveCalender";
 import LeaveHistory from "./leaveHistory";
+import OtherLeaves from "./OtherLeaves";
 
 // const chartData = [
 // 	{ browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -12,11 +14,9 @@ import LeaveHistory from "./leaveHistory";
 // ];
 
 const Leave = () => {
-	return (
-
-		<>
-		
-		{/* <div className="flex justify-center items-center min-h-screen">
+  return (
+    <>
+      {/* <div className="flex justify-center items-center min-h-screen">
 		 	<Card>
 			<CardHeader>
 				<CardTitle>Pie Chart - Donut Active</CardTitle>
@@ -50,13 +50,13 @@ const Leave = () => {
 				</CardContent>
 			</Card>
 		</div> */}
-		
-<LeaveHistory />
-		</>
-		
-		
-		
-	);
+      <div className="grid grid-cols-12 p-4 gap-4">
+        <LeaveHistory />
+        <LeaveCalender />
+        <OtherLeaves />
+      </div>
+    </>
+  );
 };
 
 export default Leave;
