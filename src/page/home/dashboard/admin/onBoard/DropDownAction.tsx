@@ -10,7 +10,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import axiosInstance from "@/lib/axios";
 
-const DropDownAction = ({userId,fetchUserData}) => {
+const DropDownAction = ({userId, fetchUserData , isActive}) => {
   console.log(userId,"diksha")
   const handleDelete = async () => {
     try {
@@ -45,7 +45,7 @@ const DropDownAction = ({userId,fetchUserData}) => {
             onClick={() => handleDelete()}
             className="cursor-pointer hover:bg-gray-100"
           >
-            Delete
+            {isActive ? "Deactivate" : "Activate"}
             <DropdownMenuShortcut>
               <Trash />
             </DropdownMenuShortcut>

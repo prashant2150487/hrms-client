@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axiosInstance from "@/lib/axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/features/user";
 import type { AxiosResponse } from "axios";
@@ -103,12 +103,12 @@ const Login = () => {
               >
                 Password
               </label>
-              <a
-                href="#"
+              <Link
+                to="/reset-password"
                 className="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
               >
                 Forgot password?
-              </a>
+              </Link>
             </div>
             <div className="mt-2">
               <input

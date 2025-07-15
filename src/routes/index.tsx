@@ -7,6 +7,8 @@ import Onboard from "@/page/home/dashboard/admin/onBoard";
 import Attendance from "@/page/me/attendence";
 import Dashboard from "@/components/sidebar";
 import Leave from "@/page/me/leave";
+import ResetPassword from "@/page/resetPassword";
+import CreateNewPassword from "@/page/createPassword";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/create-password",
+    element: <CreateNewPassword />,
   },
   {
     path: "/home/dashboard",

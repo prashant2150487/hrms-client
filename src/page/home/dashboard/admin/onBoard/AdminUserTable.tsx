@@ -59,7 +59,7 @@ const AdminUserTable = ({ users,fetchUserData }) => {
               <TableCell className="text-right">{item.aadhaarCard}</TableCell>
               <TableCell>{item.uanNumber}</TableCell>
               <TableCell className="text-right">
-                <DropDownAction  userId={item._id} fetchUserData={fetchUserData}/>
+                <DropDownAction  userId={item._id} fetchUserData={fetchUserData} isActive={item?.isActive}/>
               </TableCell>
             </TableRow>
           ))}
