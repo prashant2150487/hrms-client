@@ -170,12 +170,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [userData]);
   return (
     <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader className="">
+      <SidebarHeader className="hover:none">
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem className="">
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:!p-1.5 hover:bg-trasnparent"
             >
               <Link to="/">
                 <Compass className="!size-5" />
