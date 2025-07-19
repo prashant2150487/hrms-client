@@ -28,10 +28,12 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const  isLoggedIn  = useSelector((state: RootState) => state.userInfo.isLoggedIn);
-  console.log(isLoggedIn,"value");
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.userInfo.isLoggedIn
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -44,18 +46,21 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      
+      setIsLoading(true);
       const response = await axiosInstance.post<AxiosResponse>(
         "v1/auth/login",
         formData
-      ); 
+      );
       dispatch(setUser(response.data.data));
       if (response.data?.success) {
         navigate("/home/dashboard");
       }
+
       // You can store token here if returned: localStorage.setItem("token", response.data.token);
     } catch (error: any) {
       console.error("Login failed:", error.response?.data || error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -129,7 +134,7 @@ const Login = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              {isLoading ? <span className="loader">Signing In...</span> : "Sign in"}
             </button>
           </div>
         </form>

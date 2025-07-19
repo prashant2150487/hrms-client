@@ -12,7 +12,6 @@ import DropDownAction from "./DropDownAction";
 import { Badge } from "@/components/ui/badge";
 
 const AdminUserTable = ({ users,fetchUserData }) => {
-  console.log(users,"gfhgfhgf")
   return (
     <div>
       <Table>
