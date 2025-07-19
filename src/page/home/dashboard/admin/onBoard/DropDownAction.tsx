@@ -11,7 +11,6 @@ import { Separator } from "@/components/ui/separator";
 import axiosInstance from "@/lib/axios";
 
 const DropDownAction = ({userId, fetchUserData , isActive}) => {
-  console.log(userId,"diksha")
   const handleDelete = async () => {
     try {
       const response = await axiosInstance.delete(`/v1/admin/users/${userId}`);

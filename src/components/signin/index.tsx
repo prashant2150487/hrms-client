@@ -31,9 +31,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(
-    (state: RootState) => state.userInfo.isLoggedIn
-  );
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

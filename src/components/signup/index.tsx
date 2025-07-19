@@ -1,10 +1,5 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -36,7 +31,9 @@ const Signup: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
-  const [focusedField, setFocusedField] = useState<keyof SignUpFormData | null>(null);
+  const [focusedField, setFocusedField] = useState<keyof SignUpFormData | null>(
+    null
+  );
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -54,7 +51,9 @@ const Signup: React.FC = () => {
 
     if (!data.email.trim()) {
       newErrors.email = "Email is required";
-    } else if (!/^[\w.!#$%&'*+/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)+$/i.test(data.email)) {
+    } else if (
+      !/^[\w.!#$%&'*+/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)+$/i.test(data.email)
+    ) {
       newErrors.email = "Invalid email address";
     }
 
@@ -70,7 +69,8 @@ const Signup: React.FC = () => {
       newErrors.employees = "Employees count is required";
     } else {
       const num = Number(data.employees);
-      if (Number.isNaN(num) || num <= 0) newErrors.employees = "Enter a positive number";
+      if (Number.isNaN(num) || num <= 0)
+        newErrors.employees = "Enter a positive number";
       if (num > 100000) newErrors.employees = "That seems too high";
     }
 
@@ -87,8 +87,8 @@ const Signup: React.FC = () => {
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Simulate success/error
       if (Math.random() > 0.3) {
         setIsSuccess(true);
@@ -103,12 +103,12 @@ const Signup: React.FC = () => {
     }
   };
 
-  const InputField = ({ 
-    id, 
-    label, 
-    type = "text", 
-    placeholder, 
-    field 
+  const InputField = ({
+    id,
+    label,
+    type = "text",
+    placeholder,
+    field,
   }: {
     id: string;
     label: string;
@@ -117,10 +117,10 @@ const Signup: React.FC = () => {
     field: keyof SignUpFormData;
   }) => (
     <div className="group relative">
-      <Label 
-        htmlFor={id} 
+      <Label
+        htmlFor={id}
         className={`text-sm font-medium transition-colors duration-200 ${
-          focusedField === field ? 'text-blue-600' : 'text-gray-700'
+          focusedField === field ? "text-blue-600" : "text-gray-700"
         }`}
       >
         {label}
@@ -135,11 +135,11 @@ const Signup: React.FC = () => {
           onFocus={() => setFocusedField(field)}
           onBlur={() => setFocusedField(null)}
           className={`transition-all duration-300 ${
-            errors[field] 
-              ? 'border-red-400 focus:border-red-500 focus:ring-red-200' 
+            errors[field]
+              ? "border-red-400 focus:border-red-500 focus:ring-red-200"
               : focusedField === field
-              ? 'border-blue-400 focus:border-blue-500 focus:ring-blue-200 shadow-md'
-              : 'border-gray-200 hover:border-gray-300 focus:border-blue-400 focus:ring-blue-100'
+              ? "border-blue-400 focus:border-blue-500 focus:ring-blue-200 shadow-md"
+              : "border-gray-200 hover:border-gray-300 focus:border-blue-400 focus:ring-blue-100"
           }`}
         />
         {focusedField === field && (
@@ -173,17 +173,21 @@ const Signup: React.FC = () => {
             </CardTitle>
             <Sparkles className="w-6 h-6 text-purple-600 animate-pulse delay-500" />
           </div>
-          <p className="text-gray-600 text-sm">Join thousands of companies already using our platform</p>
+          <p className="text-gray-600 text-sm">
+            Join thousands of companies already using our platform
+          </p>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {isSuccess && (
             <div className="flex items-center gap-2 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg animate-slide-down">
               <CheckCircle className="w-5 h-5 text-green-600" />
-              <span className="text-green-700 font-medium">Account created successfully!</span>
+              <span className="text-green-700 font-medium">
+                Account created successfully!
+              </span>
             </div>
           )}
-          
+
           {apiError && (
             <div className="flex items-center gap-2 p-4 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-lg animate-shake">
               <AlertCircle className="w-5 h-5 text-red-600" />
@@ -238,7 +242,7 @@ const Signup: React.FC = () => {
               field="employees"
             />
 
-            <Button 
+            <Button
               onClick={onSubmit}
               disabled={isSubmitting}
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
@@ -262,10 +266,6 @@ const Signup: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-
-      <style jsx>{`
-        
-      `}</style>
     </div>
   );
 };

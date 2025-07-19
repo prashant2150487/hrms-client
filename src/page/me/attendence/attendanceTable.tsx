@@ -7,7 +7,6 @@ import {
   CheckCircle, 
   AlertCircle, 
   MapPin, 
-  Clock, 
   Calendar,
   MoreHorizontal 
 } from 'lucide-react';

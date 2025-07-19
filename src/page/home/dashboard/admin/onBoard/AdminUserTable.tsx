@@ -11,7 +11,7 @@ import {
 import DropDownAction from "./DropDownAction";
 import { Badge } from "@/components/ui/badge";
 
-const AdminUserTable = ({ users,fetchUserData }) => {
+const AdminUserTable = ({ users, fetchUserData }) => {
   return (
     <div>
       <Table>
@@ -33,7 +33,7 @@ const AdminUserTable = ({ users,fetchUserData }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users?.map((item, idx) => (
+          {users?.map((item, idx: number) => (
             <TableRow key={idx}>
               <TableCell>
                 <Checkbox />
@@ -58,7 +58,11 @@ const AdminUserTable = ({ users,fetchUserData }) => {
               <TableCell className="text-right">{item.aadhaarCard}</TableCell>
               <TableCell>{item.uanNumber}</TableCell>
               <TableCell className="text-right">
-                <DropDownAction  userId={item._id} fetchUserData={fetchUserData} isActive={item?.isActive}/>
+                <DropDownAction
+                  userId={item._id}
+                  fetchUserData={fetchUserData}
+                  isActive={item?.isActive}
+                />
               </TableCell>
             </TableRow>
           ))}
