@@ -26,6 +26,15 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { CalendarPlusIcon } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const data = ["Onboard"];
 
@@ -36,6 +45,8 @@ const initialFormData = {
   email: "",
   phone: "",
   role: "",
+  salary: "",
+  reportingManger: "",
   department: "Engineering",
   designation: "Backend Developer",
   startDate: "",
@@ -158,12 +169,23 @@ const Onboard = () => {
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="role">Role</Label>
-                    <Input
-                      id="role"
-                      name="role"
-                      value={formData.role}
-                      onChange={handleChange}
-                    />
+                    <Select
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, role: value })
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a role" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        <SelectGroup>
+                          <SelectLabel>Role</SelectLabel>
+                          <SelectItem value="employee">Employee</SelectItem>
+                          <SelectItem value="manager">Manager</SelectItem>
+                          <SelectItem value="admin">Admin</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
@@ -184,6 +206,26 @@ const Onboard = () => {
                       id="designation"
                       name="designation"
                       value={formData.designation}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label>Salary</Label>
+                    <Input
+                      type="text"
+                      name="salary"
+                      value={formData.salary}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div>
+                    <Label>Reporting manager</Label>
+                    <Input
+                      type="text"
+                      name="reportingManger"
+                      value={formData.reportingManger}
                       onChange={handleChange}
                     />
                   </div>
@@ -216,7 +258,6 @@ const Onboard = () => {
                         </DrawerHeader>
                         <Calendar
                           mode="single"
-
                           selected={date}
                           captionLayout="dropdown"
                           onSelect={(selectedDate) => {
@@ -285,7 +326,7 @@ const Onboard = () => {
                     Cancel
                   </Button>
                 </DialogClose>
-                <Button type="submit">Save changes</Button>
+                <Button type="submit" variant="outline">Save changes</Button>
               </DialogFooter>
             </form>
           </DialogContent>
