@@ -9,7 +9,6 @@ const ResetPassword = () => {
 
   const handleSubmit = async () => {
     if (!email) return; // Prevent if email is empty
-
     try {
       setIsLoading(true);
       const response = await axiosInstance.post("/v1/auth/forgot-password", {
