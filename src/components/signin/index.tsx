@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/features/user";
 import type { AxiosResponse } from "axios";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
+
+import { EyeOff } from "lucide-react";
+import { Eye } from "lucide-react";
 
 interface LoginUser {
   id: string;
@@ -29,9 +30,9 @@ const Login = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [viewPassword, setViewPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,6 +40,9 @@ const Login = () => {
       ...formData,
       [name]: value,
     });
+  };
+  const handlePaswword = () => {
+    setViewPassword(!viewPassword);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -113,17 +117,26 @@ const Login = () => {
                 Forgot password?
               </Link>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 flex justify-between items-center rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm ">
               <input
-                type="password"
+                type={viewPassword ? "text" : "password"}
                 name="password"
                 id="password"
                 autoComplete="current-password"
                 onChange={handleChange}
                 value={formData.password}
                 required
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                className="outline-0"
               />
+
+              {viewPassword ? (
+                <EyeOff
+                  className=" w-5 cursor-pointer"
+                  onClick={handlePaswword}
+                />
+              ) : (
+                <Eye className=" w-5 cursor-pointer" onClick={handlePaswword} />
+              )}
             </div>
           </div>
 
@@ -132,7 +145,11 @@ const Login = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              {isLoading ? <span className="loader">Signing In...</span> : "Sign in"}
+              {isLoading ? (
+                <span className="loader">Signing In...</span>
+              ) : (
+                "Sign in"
+              )}
             </button>
           </div>
         </form>
