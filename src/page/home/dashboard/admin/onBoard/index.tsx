@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SecondaryHeader from "@/components/SecondaryHeader";
 import Dashboard from "@/components/sidebar";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axiosInstance from "@/lib/axios";
 import AdminUserTable from "./AdminUserTable";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { CalendarPlusIcon } from "lucide-react";
 
 const data = ["Onboard"];
 
@@ -39,6 +49,8 @@ const Onboard = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [users, setUsers] = useState([]);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [date, setDate] = useState<Date | undefined>(undefined);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,18 +58,13 @@ const Onboard = () => {
 
   const handleAddCandidate = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const res = await axiosInstance.post("/v1/admin/users", formData);
-
       alert("Candidate added successfully");
-
-      // Optionally reset form
       setFormData(initialFormData);
+      setDate(undefined);
       setDialogOpen(false);
       fetchUserData();
-
-      // You can refresh or update onboardData here dynamically if needed
     } catch (err: any) {
       console.error("Error: " + err.message);
     }
@@ -71,10 +78,11 @@ const Onboard = () => {
       console.log(err.message);
     }
   };
+
   useEffect(() => {
     fetchUserData();
   }, []);
-  // console.log(users, "user");
+
   return (
     <Dashboard>
       <SecondaryHeader data={data} />
@@ -185,13 +193,46 @@ const Onboard = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="startDate">Start Date</Label>
-                    <Input
-                      id="startDate"
-                      name="startDate"
-                      type="date"
-                      value={formData.startDate}
-                      onChange={handleChange}
-                    />
+                    <Drawer open={open} onOpenChange={setOpen}>
+                      <DrawerTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-between font-normal cursor-pointer"
+                        >
+                          {formData.startDate
+                            ? new Date(formData.startDate).toLocaleDateString()
+                            : "Select date"}
+                          <CalendarPlusIcon className="ml-2" />
+                        </Button>
+                      </DrawerTrigger>
+                      <DrawerContent className="w-full  mx-auto bg-white text-black rounded-t-lg p-4 shadow-lg">
+                        <DrawerHeader>
+                          <DrawerTitle className="text-lg font-semibold mb-2 text-black">
+                            Select Start Date
+                          </DrawerTitle>
+                          <DrawerDescription className="text-sm text-muted-foreground mb-4">
+                            Choose the employee's start date
+                          </DrawerDescription>
+                        </DrawerHeader>
+                        <Calendar
+                          mode="single"
+
+                          selected={date}
+                          captionLayout="dropdown"
+                          onSelect={(selectedDate) => {
+                            setDate(selectedDate);
+                            setFormData((prev) => ({
+                              ...prev,
+                              startDate: selectedDate
+                                ? selectedDate.toISOString()
+                                : "",
+                            }));
+                            setOpen(false);
+                          }}
+                          className="mx-auto border rounded-md p-2 "
+                        />
+                      </DrawerContent>
+                    </Drawer>
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="location">Location</Label>
@@ -203,7 +244,8 @@ const Onboard = () => {
                     />
                   </div>
                 </div>
-                {/* Row 6 - panCard, aadharCard */}
+
+                {/* Row 6 */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="panCard">PAN Card</Label>
@@ -224,7 +266,8 @@ const Onboard = () => {
                     />
                   </div>
                 </div>
-                {/* Row 7 - uanNumber */}
+
+                {/* Row 7 */}
                 <div className="grid gap-2">
                   <Label htmlFor="uanNumber">UAN Number</Label>
                   <Input
