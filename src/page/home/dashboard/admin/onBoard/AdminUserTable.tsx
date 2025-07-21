@@ -20,12 +20,12 @@ const AdminUserTable = ({ users, fetchUserData }) => {
             <TableHead>
               <Checkbox />
             </TableHead>
-            <TableHead>First Name</TableHead>
-            <TableHead>Last Name</TableHead>
+            <TableHead>Full Name</TableHead>
             <TableHead>Email Id</TableHead>
             <TableHead className="text-right">Official Email</TableHead>
             <TableHead>Department</TableHead>
             <TableHead>Is Active</TableHead>
+             <TableHead>Role</TableHead>
             <TableHead className="text-right">PAN card number</TableHead>
             <TableHead className="text-right">Aadhaar card number</TableHead>
             <TableHead>UAN number</TableHead>
@@ -38,8 +38,7 @@ const AdminUserTable = ({ users, fetchUserData }) => {
               <TableCell>
                 <Checkbox />
               </TableCell>
-              <TableCell>{item.firstName}</TableCell>
-              <TableCell>{item.lastName}</TableCell>
+              <TableCell>{item.firstName + " " + item.lastName}</TableCell>
               <TableCell>{item.email}</TableCell>
               <TableCell className="text-right">{item.officialEmail}</TableCell>
               <TableCell>{item.department}</TableCell>
@@ -54,6 +53,7 @@ const AdminUserTable = ({ users, fetchUserData }) => {
                   {item.isActive ? "Active" : "Inactive"}
                 </Badge>
               </TableCell>
+               <TableHead>{item?.role}</TableHead>
               <TableCell className="text-right">{item.panCard}</TableCell>
               <TableCell className="text-right">{item.aadhaarCard}</TableCell>
               <TableCell>{item.uanNumber}</TableCell>
