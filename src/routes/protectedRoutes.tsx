@@ -8,7 +8,5 @@ export const Protect = ({ children }: ProtectProps) => {
   const isLoggedIn = useSelector(
     (state: RootState) => state.userInfo.isLoggedIn
   );
-
-
   return isLoggedIn ? <>{children}</> : <Navigate to="/login" />;
 };
