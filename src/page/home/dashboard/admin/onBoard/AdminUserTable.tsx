@@ -1,5 +1,4 @@
 import { Checkbox } from "@/components/ui/checkbox";
-
 import {
   Table,
   TableBody,
@@ -10,8 +9,10 @@ import {
 } from "@/components/ui/table";
 import DropDownAction from "./DropDownAction";
 import { Badge } from "@/components/ui/badge";
-
+import { useEffect, useState } from "react";
+import axiosInstance from "@/lib/axios";
 const AdminUserTable = ({ users, fetchUserData }) => {
+
   return (
     <div>
       <Table>
@@ -33,7 +34,7 @@ const AdminUserTable = ({ users, fetchUserData }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users?.map((item, idx: number) => (
+          {users?.map((item, idx) => (
             <TableRow key={idx}>
               <TableCell>
                 <Checkbox />
@@ -45,19 +46,17 @@ const AdminUserTable = ({ users, fetchUserData }) => {
               <TableCell>
                 <Badge
                   color={item.isActive ? "green" : "red"}
-                  className={`${
-                    item.isActive ? "bg-green-400 text-xs" : "bg-red-100"
-                  } text-sm`}
+                  className={`${item.isActive ? "bg-green-400 text-xs" : "bg-red-100"} text-sm`}
                   variant={item.isActive ? "default" : "destructive"}
                 >
                   {item.isActive ? "Active" : "Inactive"}
                 </Badge>
               </TableCell>
-               <TableHead>{item?.role}</TableHead>
+              <TableCell>{item?.role}</TableCell>
               <TableCell className="text-right">{item.panCard}</TableCell>
               <TableCell className="text-right">{item.aadhaarCard}</TableCell>
               <TableCell>{item.uanNumber}</TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-right cursor-pointer">
                 <DropDownAction
                   userId={item._id}
                   fetchUserData={fetchUserData}
@@ -71,5 +70,4 @@ const AdminUserTable = ({ users, fetchUserData }) => {
     </div>
   );
 };
-
 export default AdminUserTable;

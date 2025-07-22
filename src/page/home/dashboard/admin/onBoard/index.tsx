@@ -35,9 +35,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 const data = ["Onboard"];
-
 const initialFormData = {
   firstName: "",
   lastName: "",
@@ -55,18 +53,47 @@ const initialFormData = {
   aadharCard: "",
   uanNumber: "",
 };
-
 const Onboard = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [users, setUsers] = useState([]);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const [viewRole, setViewRole] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [designations, setDesignations] = useState([]);
+
+  const fetchDepartmentData = async () => {
+    try {
+      const response = await axiosInstance.get("/v1/admin/users/departments");
+      console.log(response.data.data, "rerwrwer");
+      setDepartments(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchRoleData = async () => {
+    try {
+      const response = await axiosInstance.get("/v1/admin/users/roles");
+      setViewRole(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchDataDesgination = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/v1/admin/users/departments/${formData.department}/designations`
+      );
+      setDesignations(response.data?.data); // Expecting an array here
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleAddCandidate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -80,7 +107,6 @@ const Onboard = () => {
       console.error("Error: " + err.message);
     }
   };
-
   const fetchUserData = async () => {
     try {
       const res = await axiosInstance.get("/v1/admin/users");
@@ -89,18 +115,21 @@ const Onboard = () => {
       console.log(err.message);
     }
   };
-
   useEffect(() => {
     fetchUserData();
+    fetchRoleData();
+    fetchDepartmentData();
+    fetchDataDesgination();
   }, []);
-
   return (
     <Dashboard>
       <SecondaryHeader data={data} />
       <div className="flex justify-end w-full mb-4">
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline">Add Candidate</Button>
+            <Button variant="outline" className=" cursor-pointer">
+              Add Candidate
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px] bg-white">
             <form onSubmit={handleAddCandidate}>
@@ -132,7 +161,6 @@ const Onboard = () => {
                     />
                   </div>
                 </div>
-
                 {/* Row 2 */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
@@ -180,34 +208,61 @@ const Onboard = () => {
                       <SelectContent className="bg-white">
                         <SelectGroup>
                           <SelectLabel>Role</SelectLabel>
-                          <SelectItem value="employee">Employee</SelectItem>
-                          <SelectItem value="manager">Manager</SelectItem>
-                          <SelectItem value="admin">Admin</SelectItem>
+                          {viewRole.map((item, index) => (
+                            <SelectItem key={index} value={item}>
+                              {item}
+                            </SelectItem>
+                          ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
-
                 {/* Row 4 */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="department">Department</Label>
-                    <Input
-                      id="department"
-                      name="department"
-                      value={formData.department}
-                      onChange={handleChange}
-                    />
+                    <Select
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, department: value })
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a role" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        <SelectGroup>
+                          <SelectLabel>Department</SelectLabel>
+                          {departments.map((item, index) => (
+                            <SelectItem key={index} value={item}>
+                              {item}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="designation">Designation</Label>
-                    <Input
-                      id="designation"
-                      name="designation"
-                      value={formData.designation}
-                      onChange={handleChange}
-                    />
+                    <Select
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, designation: value })
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a role" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        <SelectGroup>
+                          <SelectLabel>Designation</SelectLabel>
+                          {designations.map((item, index) => (
+                            <SelectItem key={index} value={item}>
+                              {item}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -326,7 +381,9 @@ const Onboard = () => {
                     Cancel
                   </Button>
                 </DialogClose>
-                <Button type="submit" variant="outline">Save changes</Button>
+                <Button type="submit" variant="outline">
+                  Save changes
+                </Button>
               </DialogFooter>
             </form>
           </DialogContent>
