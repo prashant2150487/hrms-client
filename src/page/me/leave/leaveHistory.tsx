@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 const LeaveHistory = () => {
   return (
     <>
-      <div className="col-span-5  bg-white rounded-2xl shadow-md p-6 space-y-5">
+      <div className="col-span-4  bg-white rounded-2xl shadow-md p-6 space-y-5">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold text-gray-800">Leave History</h2>
           <Button

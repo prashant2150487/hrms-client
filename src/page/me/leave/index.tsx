@@ -1,61 +1,58 @@
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-// import { Pie, PieChart, Sector, Cell } from "recharts";
-
+import { Button } from "@/components/ui/button";
 import LeaveCalender from "./leaveCalender";
 import LeaveHistory from "./leaveHistory";
 import OtherLeaves from "./OtherLeaves";
-
-// const chartData = [
-// 	{ browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-// 	{ browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-// 	{ browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-// 	{ browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-// 	{ browser: "other", visitors: 90, fill: "var(--color-other)" },
-// ];
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { X } from "lucide-react"; // Add this import
+import { useState } from "react";
 
 const Leave = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <>
-      {/* <div className="flex justify-center items-center min-h-screen">
-		 	<Card>
-			<CardHeader>
-				<CardTitle>Pie Chart - Donut Active</CardTitle>
-					<CardDescription>January - June 2024</CardDescription>
-				</CardHeader>
-			<CardContent>
-				<PieChart width={300} height={200}>
-					<Pie
-							data={chartData}
-							dataKey="visitors"
-							nameKey="browser"
-							innerRadius={60}
-							outerRadius={80}
-							strokeWidth={5}
-              
-							activeShape={({
-								outerRadius = 0,
-								...props
-							}: PieSectorDataItem) => (
-								<Sector {...props} outerRadius={outerRadius + 10} />
-							)}
-						>
-							{chartData.map((entry, index) => (
-								<Cell
-									key={`cell-${index}`}
-									fill={`var(--color-${entry.browser})`}
-								/>
-							))}
-						</Pie>
-					</PieChart>
-				</CardContent>
-			</Card>
-		</div> */}
-      <div className="grid grid-cols-12 p-4 gap-4">
+    <div className="p-3">
+      
+        <Drawer open={open} onOpenChange={setOpen}>
+          <DrawerTrigger asChild>
+            <Button
+              variant={"ghost"}
+              className="shadow rounded-md bg-lime-400 text-gray-800 hover:text-gray-600 ml-auto"
+            >
+              Apply Leave
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent className="fixed h-screen right-0 top-0 h-full w-full max-w-md bg-white shadow-lg transition-transform duration-300 ml-auto">
+            <DrawerHeader className="flex flex-row items-center justify-between">
+              <div>
+                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                <DrawerDescription>
+                  This action cannot be undone.
+                </DrawerDescription>
+              </div>
+              <button
+                onClick={() => setOpen(false)}
+                className="p-2 rounded hover:bg-gray-100 focus:outline-none"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </DrawerHeader>
+          </DrawerContent>
+        </Drawer>
+      
+      <div className="grid grid-cols-12 gap-4 mt-3">
         <LeaveHistory />
         <LeaveCalender />
         <OtherLeaves />
       </div>
-    </>
+    </div>
   );
 };
 

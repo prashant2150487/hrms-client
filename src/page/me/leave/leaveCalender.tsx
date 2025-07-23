@@ -37,7 +37,7 @@ export default function LeaveCalender() {
   ];
 
   return (
-    <div className="col-span-4  p-6 rounded-2xl bg-white">
+    <div className="col-span-4 shadow-md  p-6 rounded-2xl bg-white">
       <h1 className="text-2xl font-semibold text-gray-800 mb-6">
         Leave Calendar
       </h1>
