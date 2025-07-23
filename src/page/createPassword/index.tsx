@@ -1,20 +1,20 @@
 import axiosInstance from "@/lib/axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 const CreateNewPassword = () => {
-  const { resetToken } = useParams();
-
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
     acceptedTerms: false,
   });
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const {resetToken}=useParams()
+  const navigate=useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -23,7 +23,6 @@ const CreateNewPassword = () => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -32,19 +31,16 @@ const CreateNewPassword = () => {
     if (!formData.acceptedTerms) {
       return setError("You must accept the Terms and Conditions.");
     }
-
     if (formData.password !== formData.confirmPassword) {
       return setError("Passwords do not match.");
     }
-
     try {
       setIsLoading(true);
-      const response = await axiosInstance.post("/v1/auth/reset-password", {
-        token: resetToken,
+      const response = await axiosInstance.put(`/v1/auth/reset-password/${resetToken}`, {
         email: formData.email,
-        password: formData.password,
+        newPassword: formData.password,
       });
-
+      navigate("/login")
       setSuccess("Your password has been reset successfully.");
       setFormData({
         email: "",
@@ -146,7 +142,7 @@ const CreateNewPassword = () => {
             disabled={isLoading}
             className="w-full py-2 px-4 text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-lg shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Resetting..." : "Reset Password"}
+            {isLoading ? "Resetting..." : "Create Password"}
           </button>
         </form>
       </div>
