@@ -43,6 +43,7 @@ const initialFormData = {
   email: "",
   phone: "",
   role: "",
+  AccountHolder:"",
   salary: "",
   reportingManger: "",
   department: "Engineering",
@@ -51,6 +52,7 @@ const initialFormData = {
   location: "Delhi",
   panCard: "",
   aadharCard: "",
+  AccountName:"",
   uanNumber: "",
 };
 const Onboard = () => {
@@ -362,6 +364,46 @@ const Onboard = () => {
                     />
                   </div>
                 </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="aadharCard">AccountHolder Name</Label>
+                    <Input
+                      id="AccountHolder"
+                      name="AccountHolder"
+                      value={formData.AccountHolder}
+                      onChange={handleChange}
+                    />
+                  </div>
+                   <div className="grid gap-2">
+                    <Label htmlFor="accountNumber">Account Number</Label>
+                    <Input
+                      id="Account Number"
+                      name="Account Number"
+                      value={formData.AccountName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="aadharCard"> IFC code</Label>
+                    <Input
+                      id="AccountHolder"
+                      name="AccountHolder"
+                      value={formData.AccountHolder}
+                      onChange={handleChange}
+                    />
+                  </div>
+                   <div className="grid gap-2">
+                    <Label htmlFor="accountNumber">Account Number</Label>
+                    <Input
+                      id="Account Number"
+                      name="Account Number"
+                      value={formData.AccountName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
 
                 {/* Row 7 */}
                 <div className="grid gap-2">
@@ -389,7 +431,6 @@ const Onboard = () => {
           </DialogContent>
         </Dialog>
       </div>
-
       <AdminUserTable users={users} fetchUserData={fetchUserData} />
     </Dashboard>
   );
