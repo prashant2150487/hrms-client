@@ -12,14 +12,15 @@ import {
 } from "@/components/ui/drawer";
 import { X } from "lucide-react"; // Add this import
 import { useState } from "react";
+import { Calendar } from "@/components/ui/calendar";
 
 const Leave = () => {
   const [open, setOpen] = useState(false);
-
+  const [date, setDate] = useState<Date | undefined>(new Date(2025, 5, 12));
   return (
     <div className="p-3">
-      
-        <Drawer open={open} onOpenChange={setOpen}>
+      <div className="flex justify-end">
+        <Drawer open={open} onOpenChange={setOpen} direction="right">
           <DrawerTrigger asChild>
             <Button
               variant={"ghost"}
@@ -28,25 +29,29 @@ const Leave = () => {
               Apply Leave
             </Button>
           </DrawerTrigger>
-          <DrawerContent className="fixed h-screen right-0 top-0 h-full w-full max-w-md bg-white shadow-lg transition-transform duration-300 ml-auto">
-            <DrawerHeader className="flex flex-row items-center justify-between">
-              <div>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>
-                  This action cannot be undone.
-                </DrawerDescription>
-              </div>
-              <button
+          <DrawerContent className=" w-full max-w-5xl bg-white shadow-lg transition-transform duration-300 ">
+            <DrawerHeader className="flex flex-row items-center justify-between border-b-1 border-gray-300">
+              <DrawerTitle>Request Leave?</DrawerTitle>
+              <Button
                 onClick={() => setOpen(false)}
-                className="p-2 rounded hover:bg-gray-100 focus:outline-none"
+                className="p-2 rounded hover:bg-gray-100 focus:outline-none shadow-lg"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
-              </button>
+              </Button>
             </DrawerHeader>
+            <Calendar
+              mode="single"
+              defaultMonth={date}
+              numberOfMonths={2}
+              selected={date}
+              onSelect={setDate}
+              className="rounded-lg border shadow-sm"
+            />
           </DrawerContent>
         </Drawer>
-      
+      </div>
+
       <div className="grid grid-cols-12 gap-4 mt-3">
         <LeaveHistory />
         <LeaveCalender />
