@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import axiosInstance from "./lib/axios";
 import { setUser } from "./features/user";
 import type { RootState } from "./store";
+import Spinner from "./components/Spinner";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <Spinner/>
     </>
   );
 }
