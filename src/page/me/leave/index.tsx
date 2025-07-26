@@ -5,22 +5,34 @@ import OtherLeaves from "./OtherLeaves";
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { X } from "lucide-react"; // Add this import
+import { X } from "lucide-react";
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
+import "react-day-picker/dist/style.css";
+
+
+type DateRange = {
+  from: Date | undefined;
+  to: Date | undefined;
+};
 
 const Leave = () => {
-  const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(new Date(2025, 5, 12));
+  const [open, setOpen] = useState<boolean>(false);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(2025, 5, 17),
+    to: new Date(2025, 5, 20),
+  });
+
+  console.log(dateRange);
+
   return (
     <div className="p-3">
       <div className="flex justify-end">
-        <Drawer open={open} onOpenChange={setOpen} direction="right">
+        <Drawer open={open} onOpenChange={setOpen} direction="right" >
           <DrawerTrigger asChild>
             <Button
               variant={"ghost"}
@@ -29,7 +41,7 @@ const Leave = () => {
               Apply Leave
             </Button>
           </DrawerTrigger>
-          <DrawerContent className=" w-full max-w-5xl bg-white shadow-lg transition-transform duration-300 ">
+          <DrawerContent className="w-full max-width-900px bg-white shadow-lg transition-transform duration-300 ">
             <DrawerHeader className="flex flex-row items-center justify-between border-b-1 border-gray-300">
               <DrawerTitle>Request Leave?</DrawerTitle>
               <Button
@@ -40,13 +52,26 @@ const Leave = () => {
                 <X className="w-5 h-5" />
               </Button>
             </DrawerHeader>
+            <div>
+              <div className="grid grid-cols-2"></div>
+            </div>
             <Calendar
-              mode="single"
-              defaultMonth={date}
-              numberOfMonths={2}
-              selected={date}
-              onSelect={setDate}
-              className="rounded-lg border shadow-sm"
+              mode="range"
+              defaultMonth={dateRange?.from}
+              selected={dateRange}
+              onSelect={setDateRange}
+              numberOfMonths={1}
+              disabled={{ dayOfWeek: [0, 6] }}
+              className=" border-0 shadow-md bg-red"
+              classNames={{
+                range_start:"bg-black text-white rounded-md text-bold",
+                range_end:"bg-black text-white rounded-md",
+                selected:"border-0 rounded-md bg-black text-white",
+                day:"border-0"
+              }}
+              excludeDisabled
+              size="sm"
+              width={200}
             />
           </DrawerContent>
         </Drawer>
