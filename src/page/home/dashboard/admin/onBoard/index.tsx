@@ -68,7 +68,6 @@ const Onboard = () => {
   const fetchDepartmentData = async () => {
     try {
       const response = await axiosInstance.get("/v1/admin/users/departments");
-      console.log(response.data.data, "rerwrwer");
       setDepartments(response.data.data);
     } catch (error) {
       console.log(error);
@@ -133,7 +132,7 @@ const Onboard = () => {
               Add Candidate
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] bg-white">
+          <DialogContent className="h-screen min-w-screen bg-white">
             <form onSubmit={handleAddCandidate}>
               <DialogHeader>
                 <DialogTitle>Add Employee</DialogTitle>
