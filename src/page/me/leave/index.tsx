@@ -17,11 +17,12 @@ import "react-day-picker/dist/style.css";
 
 type DateRange = {
   from: Date | undefined;
-  to: Date | undefined;
+  to: Date | undefined; 
 };
 
 const Leave = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const [showCalender,setShowCalender]=useState<boolean>(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: new Date(2025, 5, 17),
     to: new Date(2025, 5, 20),
