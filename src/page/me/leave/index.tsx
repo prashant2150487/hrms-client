@@ -11,10 +11,12 @@ import {
 } from "@/components/ui/drawer";
 import { X } from "lucide-react";
 import { useState } from "react";
+import Chart from "./chart";
 import { Calendar } from "@/components/ui/calendar";
 import "react-day-picker/dist/style.css";
 
 
+import type { DateRange } from "react-day-picker";
 type DateRange = {
   from: Date | undefined;
   to: Date | undefined; 
@@ -32,8 +34,9 @@ const Leave = () => {
 
   return (
     <div className="p-3">
+      <Chart />
       <div className="flex justify-end">
-        <Drawer open={open} onOpenChange={setOpen} direction="right" >
+        <Drawer open={open} onOpenChange={setOpen} direction="right">
           <DrawerTrigger asChild>
             <Button
               variant={"ghost"}
@@ -65,19 +68,16 @@ const Leave = () => {
               disabled={{ dayOfWeek: [0, 6] }}
               className=" border-0 shadow-md bg-red"
               classNames={{
-                range_start:"bg-black text-white rounded-md text-bold",
-                range_end:"bg-black text-white rounded-md",
-                selected:"border-0 rounded-md bg-black text-white",
-                day:"border-0"
+                range_start: "bg-black text-white rounded-md text-bold",
+                range_end: "bg-black text-white rounded-md",
+                selected: "border-0 rounded-md bg-black text-white",
+                day: "border-0"
               }}
               excludeDisabled
-              size="sm"
-              width={200}
             />
           </DrawerContent>
         </Drawer>
       </div>
-
       <div className="grid grid-cols-12 gap-4 mt-3">
         <LeaveHistory />
         <LeaveCalender />
