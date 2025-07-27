@@ -7,6 +7,7 @@ import type { AxiosResponse } from "axios";
 
 import { EyeOff } from "lucide-react";
 import { Eye } from "lucide-react";
+import { hideLoader, showLoader } from "@/features/loader";
 
 interface LoginUser {
   id: string;
@@ -49,6 +50,7 @@ const Login = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
+      dispatch(showLoader());
       const response = await axiosInstance.post<AxiosResponse>(
         "v1/auth/login",
         formData
@@ -63,6 +65,7 @@ const Login = () => {
       console.error("Login failed:", error.response?.data || error.message);
     } finally {
       setIsLoading(false);
+      dispatch(hideLoader())
     }
   };
 

@@ -5,22 +5,43 @@ import OtherLeaves from "./OtherLeaves";
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { X } from "lucide-react"; // Add this import
+import { X } from "lucide-react";
 import { useState } from "react";
+<<<<<<< HEAD
 import Chart from "./chart";
+=======
+import { Calendar } from "@/components/ui/calendar";
+import "react-day-picker/dist/style.css";
+
+
+type DateRange = {
+  from: Date | undefined;
+  to: Date | undefined;
+};
+>>>>>>> 2f9140525592c3272d1bbf8956dc7cdbffa2ae10
 
 const Leave = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(2025, 5, 17),
+    to: new Date(2025, 5, 20),
+  });
+
+  console.log(dateRange);
 
   return (
     <div className="p-3">
+<<<<<<< HEAD
       <Chart/> 
         <Drawer open={open} onOpenChange={setOpen}>
+=======
+      <div className="flex justify-end">
+        <Drawer open={open} onOpenChange={setOpen} direction="right" >
+>>>>>>> 2f9140525592c3272d1bbf8956dc7cdbffa2ae10
           <DrawerTrigger asChild>
             <Button
               variant={"ghost"}
@@ -29,24 +50,45 @@ const Leave = () => {
               Apply Leave
             </Button>
           </DrawerTrigger>
-          <DrawerContent className="fixed h-screen right-0 top-0 h-full w-full max-w-md bg-white shadow-lg transition-transform duration-300 ml-auto">
-            <DrawerHeader className="flex flex-row items-center justify-between">
-              <div>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>
-                  This action cannot be undone.
-                </DrawerDescription>
-              </div>
-              <button
+          <DrawerContent className="w-full max-width-900px bg-white shadow-lg transition-transform duration-300 ">
+            <DrawerHeader className="flex flex-row items-center justify-between border-b-1 border-gray-300">
+              <DrawerTitle>Request Leave?</DrawerTitle>
+              <Button
                 onClick={() => setOpen(false)}
-                className="p-2 rounded hover:bg-gray-100 focus:outline-none"
+                className="p-2 rounded hover:bg-gray-100 focus:outline-none shadow-lg"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
-              </button>
+              </Button>
             </DrawerHeader>
+            <div>
+              <div className="grid grid-cols-2"></div>
+            </div>
+            <Calendar
+              mode="range"
+              defaultMonth={dateRange?.from}
+              selected={dateRange}
+              onSelect={setDateRange}
+              numberOfMonths={1}
+              disabled={{ dayOfWeek: [0, 6] }}
+              className=" border-0 shadow-md bg-red"
+              classNames={{
+                range_start:"bg-black text-white rounded-md text-bold",
+                range_end:"bg-black text-white rounded-md",
+                selected:"border-0 rounded-md bg-black text-white",
+                day:"border-0"
+              }}
+              excludeDisabled
+              size="sm"
+              width={200}
+            />
           </DrawerContent>
         </Drawer>
+<<<<<<< HEAD
+=======
+      </div>
+
+>>>>>>> 2f9140525592c3272d1bbf8956dc7cdbffa2ae10
       <div className="grid grid-cols-12 gap-4 mt-3">
         <LeaveHistory />
         <LeaveCalender />
