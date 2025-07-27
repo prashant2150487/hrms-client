@@ -1,6 +1,11 @@
+import type { RootState } from "@/store";
+import { useSelector } from "react-redux";
+
 const Spinner = (props) => {
+  const isLoading = useSelector((state: RootState) => state.loader.isLoading);
+  if (!isLoading) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-10 bg-transparent">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/50">
       <svg
         width={64}
         height={64}
