@@ -6,8 +6,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -25,7 +23,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { CalendarPlusIcon } from "lucide-react";
+import { CalendarPlusIcon, Phone } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -40,10 +38,11 @@ const initialFormData = {
   firstName: "",
   lastName: "",
   password: "Psachan04@",
+  confirmPassword: "",
   email: "",
   phone: "",
   role: "",
-  AccountHolder:"",
+  AccountHolder: "",
   salary: "",
   reportingManger: "",
   department: "Engineering",
@@ -52,8 +51,17 @@ const initialFormData = {
   location: "Delhi",
   panCard: "",
   aadharCard: "",
-  AccountName:"",
+  AccountNumber: "",
+  IFCCode: "",
+  BranchName: "",
+  BankName: "",
   uanNumber: "",
+  companyLocation: "",
+  EmployementStatus: "",
+  DateOFBirth: "",
+  Age: "",
+  Gender: "",
+  MarriedStatus: "",
 };
 const Onboard = () => {
   const [formData, setFormData] = useState(initialFormData);
@@ -64,6 +72,57 @@ const Onboard = () => {
   const [viewRole, setViewRole] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [designations, setDesignations] = useState([]);
+  const [error, setError] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    Phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const validation = () => {
+    const newError = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      Phone: "",
+      password: "",
+      confirmPassword: "",
+    };
+    let isValid = true;
+    if (!formData.firstName.trim()) {
+      newError.firstName = "First name is requried";
+      isValid = false;
+    }
+    if (!formData.lastName.trim()) {
+      newError.lastName = "Last name is requried";
+      isValid = false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newError.email = "email is required";
+      isValid = false;
+    } else if (!emailRegex.test(formData.email)) {
+      newError.email = "Email is not vaild";
+      isValid = false;
+    }
+    if (!formData.password.trim()) {
+      newError.password = "Password is required";
+      isValid = false;
+    } else if (formData.password.length < 6) {
+      newError.password = "password should 6 character";
+      isValid = false;
+    }
+    if (!formData.confirmPassword.trim()) {
+      newError.confirmPassword = "Confirm password is required";
+      isValid = false;
+    } else if (formData.password !== formData.confirmPassword) {
+      newError.confirmPassword = "password does not match";
+      isValid = false;
+    }
+    setError(newError);
+    return isValid;
+  };
 
   const fetchDepartmentData = async () => {
     try {
@@ -91,12 +150,14 @@ const Onboard = () => {
       console.log(error);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleAddCandidate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(!validation()){
+      return;
+    }
     try {
       const res = await axiosInstance.post("/v1/admin/users", formData);
       alert("Candidate added successfully");
@@ -132,70 +193,132 @@ const Onboard = () => {
               Add Candidate
             </Button>
           </DialogTrigger>
-          <DialogContent className="h-screen min-w-screen bg-white">
-            <form onSubmit={handleAddCandidate}>
-              <DialogHeader>
-                <DialogTitle>Add Employee</DialogTitle>
-                <DialogDescription>
-                  Fill in the candidate details below and click save.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4">
-                {/* Row 1 */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input
-                      id="firstName"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input
-                      id="lastName"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                    />
+          <DialogContent
+            showCloseButton={false}
+            className="h-screen min-w-screen bg-[#EDF0F6] overflow-y-auto"
+          >
+            <div className="flex gap-2 items-end justify-end">
+              <DialogClose asChild>
+                <Button type="button" variant="outline">
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button type="submit" variant="outline" onClick={handleAddCandidate}>
+                Save changes
+              </Button>
+            </div>
+            <form
+              onSubmit={handleAddCandidate}
+              className="mt-2 flex flex-col gap-3"
+            >
+              <div className="rounded-md bg-white p-8 shadow-md ">
+                <DialogHeader>
+                  <DialogTitle>Basic Information</DialogTitle>
+                </DialogHeader>
+                <div className="grid gap-4 mt-5">
+                  <div className="grid grid-cols-4 gap-4">
+                    <div className="grid gap-3">
+                      <Label htmlFor="firstName">First Name</Label>
+                      <Input
+                        id="firstName"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        className={error.firstName ? "border-red-500" : ""}
+                      />
+                      {error.firstName && (
+                        <p className="text-sm">{error.firstName}</p>
+                      )}
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="lastName">Last Name</Label>
+                      <Input
+                        id="lastName"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        className={error.lastName ? "border-red-500" : ""}
+                      />
+                      {error.lastName && (
+                        <p className="text-sm">{error.lastName}</p>
+                      )}
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={error.email ? "border-red-500" : ""}
+                      />
+                      {error.email && <p className="text-sm">{error.email}</p>}
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="email">Employee Id</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="phone">Phone</Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className={error.Phone ? "border-red-500" : ""}
+                      />
+                      {error.Phone && <p className="text-sm">{error.Phone}</p>}
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="password">Password</Label>
+                      <Input
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className={error.password ? "border-red-500" : ""}
+                      />
+                      {error.password && (
+                        <p className="text-sm">{error.password}</p>
+                      )}
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="confirmPassword"> Confirm Password</Label>
+                      <Input
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        type="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        className={
+                          error.confirmPassword ? "border-red-500" : ""
+                        }
+                      />
+                      {error.confirmPassword && <p>{error.confirmPassword}</p>}
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="location">Location</Label>
+                      <Input
+                        id="location"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
                 </div>
-                {/* Row 2 */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-
-                {/* Row 3 */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      id="password"
-                      name="password"
-                      type="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                    />
-                  </div>
+              </div>
+              <div className="rounded-md bg-white p-8 shadow-md">
+                <DialogHeader>
+                  <DialogTitle>Work Information</DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-4 gap-4 mt-5">
                   <div className="grid gap-2">
                     <Label htmlFor="role">Role</Label>
                     <Select
@@ -218,9 +341,6 @@ const Onboard = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
-                {/* Row 4 */}
-                <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="department">Department</Label>
                     <Select
@@ -265,30 +385,24 @@ const Onboard = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
+                  <div className="grid gap-2">
                     <Label>Salary</Label>
                     <Input
-                      type="text"
+                      type="number"
                       name="salary"
                       value={formData.salary}
                       onChange={handleChange}
                     />
                   </div>
-                  <div>
-                    <Label>Reporting manager</Label>
+                  <div className="grid gap-2">
+                    <Label>Company Location</Label>
                     <Input
                       type="text"
-                      name="reportingManger"
-                      value={formData.reportingManger}
+                      name="companyLocation"
+                      value={formData.companyLocation}
                       onChange={handleChange}
                     />
                   </div>
-                </div>
-
-                {/* Row 5 */}
-                <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="startDate">Start Date</Label>
                     <Drawer open={open} onOpenChange={setOpen}>
@@ -332,18 +446,77 @@ const Onboard = () => {
                     </Drawer>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="location">Location</Label>
+                    <Label>Employement status</Label>
                     <Input
-                      id="location"
-                      name="location"
-                      value={formData.location}
+                      type="text"
+                      name="EmployementStatus"
+                      value={formData.EmployementStatus}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>Reporting manager</Label>
+                    <Input
+                      type="text"
+                      name="reportingManger"
+                      value={formData.reportingManger}
                       onChange={handleChange}
                     />
                   </div>
                 </div>
-
-                {/* Row 6 */}
-                <div className="grid grid-cols-2 gap-4">
+              </div>
+              <div className="rounded-md bg-white p-8 shadow-md ">
+                <DialogHeader>
+                  <DialogTitle>Personal Information</DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-4 gap-4 mt-5">
+                  <div className="grid gap-2">
+                    <Label htmlFor="panCard">Date of Birth</Label>
+                    <Input
+                      type="date"
+                      id="DateOFBirth"
+                      name="DateOFBirth"
+                      value={formData.DateOFBirth}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="panCard">Age</Label>
+                    <Input
+                      type="number"
+                      id="Age"
+                      name="Age"
+                      value={formData.Age}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="panCard">Gender</Label>
+                    <Input
+                      type="text"
+                      id="Gender"
+                      name="Gender"
+                      value={formData.Gender}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="panCard">Married Status</Label>
+                    <Input
+                      type="text"
+                      id="MarriedStatus"
+                      name="MarriedStatus"
+                      value={formData.MarriedStatus}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-md bg-white p-8 shadow-md ">
+                <DialogHeader>
+                  <DialogTitle>Identity Information</DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-4 gap-4 mt-5">
                   <div className="grid gap-2">
                     <Label htmlFor="panCard">PAN Card</Label>
                     <Input
@@ -362,10 +535,8 @@ const Onboard = () => {
                       onChange={handleChange}
                     />
                   </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="aadharCard">AccountHolder Name</Label>
+                    <Label htmlFor="aadharCard">Account Holder Name</Label>
                     <Input
                       id="AccountHolder"
                       name="AccountHolder"
@@ -373,59 +544,53 @@ const Onboard = () => {
                       onChange={handleChange}
                     />
                   </div>
-                   <div className="grid gap-2">
-                    <Label htmlFor="accountNumber">Account Number</Label>
-                    <Input
-                      id="Account Number"
-                      name="Account Number"
-                      value={formData.AccountName}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="aadharCard"> IFC code</Label>
-                    <Input
-                      id="AccountHolder"
-                      name="AccountHolder"
-                      value={formData.AccountHolder}
-                      onChange={handleChange}
-                    />
-                  </div>
-                   <div className="grid gap-2">
                     <Label htmlFor="accountNumber">Account Number</Label>
                     <Input
-                      id="Account Number"
-                      name="Account Number"
-                      value={formData.AccountName}
+                      id="AccountNumber"
+                      name="AccountNumber"
+                      value={formData.AccountNumber}
                       onChange={handleChange}
                     />
                   </div>
-                </div>
-
-                {/* Row 7 */}
-                <div className="grid gap-2">
-                  <Label htmlFor="uanNumber">UAN Number</Label>
-                  <Input
-                    id="uanNumber"
-                    name="uanNumber"
-                    value={formData.uanNumber}
-                    onChange={handleChange}
-                  />
+                  <div className="grid gap-2">
+                    <Label htmlFor="IFCCode"> IFC code</Label>
+                    <Input
+                      id="IFCCode"
+                      name="IFCCode"
+                      value={formData.IFCCode}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="BankName">Bank Name</Label>
+                    <Input
+                      id="BankName"
+                      name="BankName"
+                      value={formData.BankName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="BranchName">Branch Name</Label>
+                    <Input
+                      id="BranchName"
+                      name="BranchName"
+                      value={formData.BranchName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="uanNumber">UAN Number</Label>
+                    <Input
+                      id="uanNumber"
+                      name="uanNumber"
+                      value={formData.uanNumber}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
               </div>
-
-              <DialogFooter className="mt-4">
-                <DialogClose asChild>
-                  <Button type="button" variant="outline">
-                    Cancel
-                  </Button>
-                </DialogClose>
-                <Button type="submit" variant="outline">
-                  Save changes
-                </Button>
-              </DialogFooter>
             </form>
           </DialogContent>
         </Dialog>
