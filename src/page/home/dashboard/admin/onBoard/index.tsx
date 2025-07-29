@@ -35,7 +35,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-const data = ["Onboard"];
+const data = ["Onboard","Holiday"];
 const initialFormData = {
   firstName: "",
   lastName: "",
