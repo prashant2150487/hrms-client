@@ -33,7 +33,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { isValid } from "date-fns";
 const data = ["Onboard"];
 const initialFormData = {
   firstName: "",
@@ -156,6 +155,9 @@ const Onboard = () => {
   };
   const handleAddCandidate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(!validation()){
+      return;
+    }
     try {
       const res = await axiosInstance.post("/v1/admin/users", formData);
       alert("Candidate added successfully");
@@ -201,7 +203,7 @@ const Onboard = () => {
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type="submit" variant="outline">
+              <Button type="submit" variant="outline" onClick={handleAddCandidate}>
                 Save changes
               </Button>
             </div>
