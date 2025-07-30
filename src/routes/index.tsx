@@ -9,6 +9,7 @@ import Dashboard from "@/components/sidebar";
 import Leave from "@/page/me/leave";
 import ResetPassword from "@/page/resetPassword";
 import CreateNewPassword from "@/page/createPassword";
+import Holiday from "@/page/home/dashboard/admin/holiday";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/onboard",
     element: <Onboard />,
+  },
+  {
+    path: "/admin/holiday",
+    element: <Holiday />,
   },
   {
     path: "/me/attendance",
