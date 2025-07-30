@@ -23,7 +23,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { CalendarPlusIcon, Phone } from "lucide-react";
+import { CalendarPlusIcon, Phone, Plus } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -155,7 +155,7 @@ const Onboard = () => {
   };
   const handleAddCandidate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(!validation()){
+    if (!validation()) {
       return;
     }
     try {
@@ -203,7 +203,11 @@ const Onboard = () => {
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type="submit" variant="outline" onClick={handleAddCandidate}>
+              <Button
+                type="submit"
+                variant="outline"
+                onClick={handleAddCandidate}
+              >
                 Save changes
               </Button>
             </div>
@@ -320,7 +324,12 @@ const Onboard = () => {
                 </DialogHeader>
                 <div className="grid grid-cols-4 gap-4 mt-5">
                   <div className="grid gap-2">
-                    <Label htmlFor="role">Role</Label>
+                    <div className="flex justify-between items-center">
+                      <Label htmlFor="role">Role</Label>
+                      <div className=" py-2 px-3 shadow  rounded-sm">
+                        <Plus className="w-4 h-4" />
+                      </div>
+                    </div>
                     <Select
                       onValueChange={(value) =>
                         setFormData({ ...formData, role: value })

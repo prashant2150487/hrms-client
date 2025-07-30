@@ -22,9 +22,7 @@ interface AttendanceRecord {
   specialStatus?: 'W-OFF' | 'LEAVE' | 'SICK';
   statusType?: 'weekly-off' | 'leave' | 'sick' | 'present';
   hasLocation?: boolean;
-}
-
-
+} 
 const AttendanceTable: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('30 DAYS');
   const [attendanceData,setAttendanceData]=useState([])
