@@ -1,5 +1,4 @@
 import { createSlice} from "@reduxjs/toolkit";
-
 interface User {
   id: string;
   email: string;
@@ -15,12 +14,10 @@ interface UserState {
   user: User | null;
   isLoggedIn: boolean;
 }
-
 const initialState: UserState = {
   user: null,
   isLoggedIn: false,
 };
-
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -38,6 +35,5 @@ const userSlice = createSlice({
     },
   },
 });
-
 export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/table";
 import DropDownAction from "./DropDownAction";
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useState } from "react";
-import axiosInstance from "@/lib/axios";
 const AdminUserTable = ({ users, fetchUserData }) => {
 
   return (

@@ -70,13 +70,14 @@ const Onboard = () => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [viewRole, setViewRole] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [designations, setDesignations] = useState([]);
-    const [showAddPopup, setShowAddPopup] = useState(false);
-
+  const [viewRole, setViewRole] = useState<string[]>([]);
+  const [departments, setDepartments] = useState<string[]>([]);
+  const [designations, setDesignations] = useState<string[]>([]);
+  const [showAddPopup, setShowAddPopup] = useState<boolean>(false);
+  const [popupTitle, setPopupTitle] = useState("");
   const [error, setError] = useState({
     firstName: "",
+
     lastName: "",
     email: "",
     Phone: "",
@@ -126,7 +127,18 @@ const Onboard = () => {
     setError(newError);
     return isValid;
   };
-   const handleAddPopup = () => {
+  const handleUpdate = (stateName: "department" | "designation" | "role", value: string) => {
+    console.log(stateName,value)
+    if (stateName === "department") {
+      setDepartments([...departments, value]);
+    } else if (stateName == "designation") {
+      setDesignations([...designations, value]);
+    } else if (stateName =="role") {
+      setViewRole([...viewRole, value]);
+    }
+  };
+  const handleAddPopup = (title) => {
+    setPopupTitle(title);
     setShowAddPopup(!showAddPopup);
   };
   const fetchDepartmentData = async () => {
@@ -233,7 +245,7 @@ const Onboard = () => {
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                        className={error.firstName ? "border-red-500" : ""}
+                        className={error.firstName ? "border-red-500" : ""+ "border-gray-300"}
                       />
                       {error.firstName && (
                         <p className="text-sm">{error.firstName}</p>
@@ -342,9 +354,11 @@ const Onboard = () => {
                           <SelectValue placeholder="Select a role" />
                         </SelectTrigger>
                         <div className=" py-2 px-3 shadow border rounded-md">
-                          <Plus className="w-4 h-4" />
+                          <Plus
+                            className="w-4 h-4"
+                            onClick={() => handleAddPopup("Role")}
+                          />
                         </div>
-                     
                       </div>
                       <SelectContent className="bg-white">
                         <SelectGroup>
@@ -369,10 +383,20 @@ const Onboard = () => {
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a role" />
                         </SelectTrigger>
-                        <div className=" py-2 px-3 shadow border rounded-md">
-                          <Plus className="w-4 h-4" onClick={handleAddPopup}  />
+                        <div
+                          className=" cursor-pointer py-2 px-3 shadow border rounded-md"
+                          onClick={() => handleAddPopup("department")}
+                        >
+                          <Plus className="w-4 h-4" />
                         </div>
-                        {showAddPopup && (<AddPopup/>)}
+                        {showAddPopup && (
+                          <AddPopup
+                            showAddPopup={showAddPopup}
+                            setShowAddPopup={setShowAddPopup}
+                            popupTitle={popupTitle}
+                            handleUpdate={handleUpdate}
+                          />
+                        )}
                       </div>
                       <SelectContent className="bg-white">
                         <SelectGroup>
@@ -395,10 +419,13 @@ const Onboard = () => {
                     >
                       <div className="flex items-center gap-2 justify-between">
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select a role" />
+                          <SelectValue placeholder="Select a designation" />
                         </SelectTrigger>
                         <div className=" py-2 px-3 shadow border rounded-md">
-                          <Plus className="w-4 h-4" />
+                          <Plus
+                            className="w-4 h-4"
+                            onClick={() => handleAddPopup("Designation")}
+                          />
                         </div>
                       </div>
                       <SelectContent className="bg-white">
