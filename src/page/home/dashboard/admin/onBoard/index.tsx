@@ -33,7 +33,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-const data = ["Onboard","Holiday"];
+import AddPopup from "./AddPopup";
+const data = ["Onboard", "Holiday"];
 const initialFormData = {
   firstName: "",
   lastName: "",
@@ -72,6 +73,8 @@ const Onboard = () => {
   const [viewRole, setViewRole] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [designations, setDesignations] = useState([]);
+    const [showAddPopup, setShowAddPopup] = useState(false);
+
   const [error, setError] = useState({
     firstName: "",
     lastName: "",
@@ -123,7 +126,9 @@ const Onboard = () => {
     setError(newError);
     return isValid;
   };
-
+   const handleAddPopup = () => {
+    setShowAddPopup(!showAddPopup);
+  };
   const fetchDepartmentData = async () => {
     try {
       const response = await axiosInstance.get("/v1/admin/users/departments");
@@ -326,18 +331,21 @@ const Onboard = () => {
                   <div className="grid gap-2">
                     <div className="flex justify-between items-center">
                       <Label htmlFor="role">Role</Label>
-                      <div className=" py-2 px-3 shadow  rounded-sm">
-                        <Plus className="w-4 h-4" />
-                      </div>
                     </div>
                     <Select
                       onValueChange={(value) =>
                         setFormData({ ...formData, role: value })
                       }
                     >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
+                      <div className="flex items-center gap-2 justify-between">
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
+                        <div className=" py-2 px-3 shadow border rounded-md">
+                          <Plus className="w-4 h-4" />
+                        </div>
+                     
+                      </div>
                       <SelectContent className="bg-white">
                         <SelectGroup>
                           <SelectLabel>Role</SelectLabel>
@@ -357,9 +365,15 @@ const Onboard = () => {
                         setFormData({ ...formData, department: value })
                       }
                     >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
+                      <div className="flex items-center gap-2 justify-between">
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
+                        <div className=" py-2 px-3 shadow border rounded-md">
+                          <Plus className="w-4 h-4" onClick={handleAddPopup}  />
+                        </div>
+                        {showAddPopup && (<AddPopup/>)}
+                      </div>
                       <SelectContent className="bg-white">
                         <SelectGroup>
                           <SelectLabel>Department</SelectLabel>
@@ -379,9 +393,14 @@ const Onboard = () => {
                         setFormData({ ...formData, designation: value })
                       }
                     >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
+                      <div className="flex items-center gap-2 justify-between">
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
+                        <div className=" py-2 px-3 shadow border rounded-md">
+                          <Plus className="w-4 h-4" />
+                        </div>
+                      </div>
                       <SelectContent className="bg-white">
                         <SelectGroup>
                           <SelectLabel>Designation</SelectLabel>
@@ -405,13 +424,19 @@ const Onboard = () => {
                   </div>
                   <div className="grid gap-2">
                     <Label>Company Location</Label>
-                    <Input
-                      type="text"
-                      name="companyLocation"
-                      value={formData.companyLocation}
-                      onChange={handleChange}
-                    />
+                    <div className="flex items-center gap-2 justify-between">
+                      <Input
+                        type="text"
+                        name="companyLocation"
+                        value={formData.companyLocation}
+                        onChange={handleChange}
+                      />
+                      <div className=" py-2 px-3 shadow border rounded-md">
+                        <Plus className="w-4 h-4" />
+                      </div>
+                    </div>
                   </div>
+
                   <div className="grid gap-2">
                     <Label htmlFor="startDate">Start Date</Label>
                     <Drawer open={open} onOpenChange={setOpen}>
