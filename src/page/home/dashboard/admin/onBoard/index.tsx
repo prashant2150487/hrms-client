@@ -34,11 +34,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AddPopup from "./AddPopup";
+import { useDispatch } from "react-redux";
+import { hideLoader, showLoader } from "@/features/loader";
 const data = ["Onboard", "Holiday"];
 const initialFormData = {
   firstName: "",
   lastName: "",
-  password: "Psachan04@",
+  password: "",
   confirmPassword: "",
   email: "",
   phone: "",
@@ -84,6 +86,7 @@ const Onboard = () => {
     password: "",
     confirmPassword: "",
   });
+  const dispatch = useDispatch(); 
   const validation = () => {
     const newError = {
       firstName: "",
@@ -137,7 +140,7 @@ const Onboard = () => {
       setViewRole([...viewRole, value]);
     }
   };
-  const handleAddPopup = (title) => {
+  const handleAddPopup = (title:string):void => {
     setPopupTitle(title);
     setShowAddPopup(!showAddPopup);
   };
@@ -159,12 +162,15 @@ const Onboard = () => {
   };
   const fetchDataDesgination = async () => {
     try {
+      dispatch(showLoader());
       const response = await axiosInstance.get(
         `/v1/admin/users/departments/${formData.department}/designations`
       );
       setDesignations(response.data?.data); // Expecting an array here
     } catch (error) {
       console.log(error);
+    }finally{
+      dispatch(hideLoader())
     }
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -214,7 +220,12 @@ const Onboard = () => {
             showCloseButton={false}
             className="h-screen min-w-screen bg-[#EDF0F6] overflow-y-auto"
           >
-            <div className="flex gap-2 items-end justify-end">
+            
+            <form
+              onSubmit={handleAddCandidate}
+              className="mt-2 flex flex-col gap-3"
+            >
+              <div className="flex gap-2 items-end justify-end ">
               <DialogClose asChild>
                 <Button type="button" variant="outline">
                   Cancel
@@ -222,16 +233,13 @@ const Onboard = () => {
               </DialogClose>
               <Button
                 type="submit"
-                variant="outline"
+                variant="default"
                 onClick={handleAddCandidate}
+                className="cursor-pointer bg-black text-white hover:bg-black/80"
               >
                 Save changes
               </Button>
             </div>
-            <form
-              onSubmit={handleAddCandidate}
-              className="mt-2 flex flex-col gap-3"
-            >
               <div className="rounded-md bg-white p-8 shadow-md ">
                 <DialogHeader>
                   <DialogTitle>Basic Information</DialogTitle>
