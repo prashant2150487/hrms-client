@@ -23,7 +23,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { CalendarPlusIcon, Phone, Plus } from "lucide-react";
+import { CalendarPlusIcon, Plus } from "lucide-react";
+// import  jobRoles  from "@/constants/role.js";
 import {
   Select,
   SelectContent,
@@ -33,9 +34,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+// import { jobRoles } from "../../../../../../src/constants/role.js";
 import AddPopup from "./AddPopup";
 import { useDispatch } from "react-redux";
 import { hideLoader, showLoader } from "@/features/loader";
+import { jobRoles } from "@/constants/role";
+import AllDepartments from "@/constants/departments";
+import AllDesignations from "@/constants/designation";
 const data = ["Onboard", "Holiday"];
 const initialFormData = {
   firstName: "",
@@ -72,9 +77,9 @@ const Onboard = () => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [viewRole, setViewRole] = useState<string[]>([]);
-  const [departments, setDepartments] = useState<string[]>([]);
-  const [designations, setDesignations] = useState<string[]>([]);
+  const [viewRole, setViewRole] = useState<string[]>(jobRoles);
+  const [departments, setDepartments] = useState<string[]>(AllDepartments);
+  const [designations, setDesignations] = useState<string[]>(AllDesignations);
   const [showAddPopup, setShowAddPopup] = useState<boolean>(false);
   const [popupTitle, setPopupTitle] = useState("");
   const [error, setError] = useState({
@@ -194,10 +199,14 @@ const Onboard = () => {
   };
   const fetchUserData = async () => {
     try {
+      dispatch(showLoader());
       const res = await axiosInstance.get("/v1/admin/users");
       setUsers(res.data?.data);
     } catch (err: any) {
       console.log(err.message);
+    }finally{
+      dispatch(hideLoader());
+    
     }
   };
   useEffect(() => {
