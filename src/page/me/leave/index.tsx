@@ -69,7 +69,7 @@ const Leave = () => {
                 <X className="w-5 h-5" />
               </Button>
             </DrawerHeader>
-            <div className="border-1 grid grid-cols-2 p-4 m-4 rounded-md">
+            <div className="border-1 border-gray-300 grid grid-cols-2 p-4 m-4 rounded-md">
               <div className="flex flex-col items-start justify-center">
                 <p className="text-gray-600 text-sm">From</p>
                 <p className="text-base">Select Date</p>
@@ -80,10 +80,10 @@ const Leave = () => {
               </div>
             </div>
             <Select>
-              <SelectTrigger className="w-[100] mx-4">
+              <SelectTrigger className="w-[100] mx-4 border-gray-300">
                 <SelectValue placeholder="Select leave type" />
               </SelectTrigger>
-              <SelectContent className="bg-white shadow-md">
+              <SelectContent className="bg-white shadow-md border-gray-300">
                 <SelectGroup>
                   <SelectLabel>Leave Types</SelectLabel>
                   <SelectItem value="comp-off">Comp off</SelectItem>
@@ -96,11 +96,14 @@ const Leave = () => {
 
             <div className="grid w-[100] mx-4 mt-4 gap-3">
               <Label htmlFor="message">Your message</Label>
-              <Textarea placeholder="Type your message here." id="message" />
+              <Textarea placeholder="Type here" className="border-gray-300" />
             </div>
             <div className="grid w-[100]  m-4 items-center gap-3">
-              <Label htmlFor="picture">Picture</Label>
-              <Input />
+              <Label htmlFor="picture">Notify</Label>
+              <Input
+                placeholder="Search Employee"
+                className="border-gray-300"
+              />
             </div>
             {/* <Calendar
               mode="range"
@@ -120,10 +123,13 @@ const Leave = () => {
             /> */}
             <DrawerFooter className="flex flex-row justify-end items-center border-t-1 border-gray-300">
               <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" className="border-gray-300">
+                  Cancel
+                </Button>
               </DrawerClose>
-              <Button variant="destructive" className="bg-black text-white">Request</Button>
-              
+              <Button variant="destructive" className="bg-black text-white">
+                Request
+              </Button>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
