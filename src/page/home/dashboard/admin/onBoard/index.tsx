@@ -135,13 +135,16 @@ const Onboard = () => {
     setError(newError);
     return isValid;
   };
-  const handleUpdate = (stateName: "department" | "designation" | "role", value: string) => {
-    console.log(stateName,value)
+  const handleUpdate = (
+    stateName: "department" | "designation" | "role",
+    value: string
+  ) => {
+    console.log(stateName, value);
     if (stateName === "department") {
       setDepartments([...departments, value]);
     } else if (stateName == "designation") {
       setDesignations([...designations, value]);
-    } else if (stateName =="role") {
+    } else if (stateName == "role") {
       setViewRole([...viewRole, value]);
     }
   };
@@ -262,7 +265,11 @@ const Onboard = () => {
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                        className={error.firstName ? "border-red-500" : ""+ "border-gray-300"}
+                        className={
+                          error.firstName
+                            ? "border-red-500"
+                            : "" + "border-gray-300"
+                        }
                       />
                       {error.firstName && (
                         <p className="text-sm">{error.firstName}</p>
@@ -569,24 +576,65 @@ const Onboard = () => {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="panCard">Gender</Label>
-                    <Input
-                      type="text"
-                      id="Gender"
-                      name="Gender"
-                      value={formData.Gender}
-                      onChange={handleChange}
-                    />
+                    <Label htmlFor="Gender">Gender</Label>
+                    <Select>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a gender" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        <SelectGroup className="">
+                          <SelectItem value="Male" className="cursor-pointer">
+                            Male
+                          </SelectItem>
+                          <SelectItem value="Female" className="cursor-pointer">
+                            Female
+                          </SelectItem>
+                          <SelectItem value="Other" className="cursor-pointer">
+                            Other
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="panCard">Married Status</Label>
-                    <Input
-                      type="text"
-                      id="MarriedStatus"
-                      name="MarriedStatus"
-                      value={formData.MarriedStatus}
-                      onChange={handleChange}
-                    />
+                    <Label htmlFor="Gender">Married status</Label>
+                    <Select>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a gender" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        <SelectGroup className="">
+                          <SelectItem value="Male" className="cursor-pointer">
+                            Single
+                          </SelectItem>
+                          <SelectItem value="Female" className="cursor-pointer">
+                            Married
+                          </SelectItem>
+                          <SelectItem
+                            value="divorced"
+                            className="cursor-pointer"
+                          >
+                            Divorced
+                          </SelectItem>
+                          <SelectItem
+                            value="widowed"
+                            className="cursor-pointer"
+                          >
+                            Widowed
+                          </SelectItem>
+                          <SelectItem
+                            value="separated"
+                            className="cursor-pointer"
+                          >
+                            Separated
+                          </SelectItem>
+                          <SelectItem value="prefer_not_to_say" className="cursor-pointer">Prefer not to say</SelectItem>
+                          <SelectItem value="Other" className="cursor-pointer">
+                            Other
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               </div>
