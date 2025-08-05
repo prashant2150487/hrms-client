@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
-
 const OtherLeaves = () => {
   return (
     <>
@@ -8,7 +7,6 @@ const OtherLeaves = () => {
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold text-gray-800">OtherLeaves</h2>
         </div>
-
         <div className="flex shadow p-1 px-3 rounded-md items-center justify-between">
           <h2 className="text-gray-600 font-medium text-sm ">Covid Leave</h2>
           <Button
