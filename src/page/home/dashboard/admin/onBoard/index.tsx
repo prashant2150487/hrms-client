@@ -84,7 +84,6 @@ const Onboard = () => {
   const [popupTitle, setPopupTitle] = useState("");
   const [error, setError] = useState({
     firstName: "",
-
     lastName: "",
     email: "",
     Phone: "",
@@ -232,7 +231,6 @@ const Onboard = () => {
             showCloseButton={false}
             className="h-screen min-w-screen bg-[#EDF0F6] overflow-y-auto"
           >
-            
             <form
               onSubmit={handleAddCandidate}
               className="mt-2 flex flex-col gap-3"
@@ -577,7 +575,12 @@ const Onboard = () => {
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="Gender">Gender</Label>
-                    <Select>
+                    <Select
+                    onValueChange={(value)=>{
+                      setFormData({...formData,Gender:value})
+                    }}
+                    >
+                      
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a gender" />
                       </SelectTrigger>
@@ -598,7 +601,11 @@ const Onboard = () => {
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="Gender">Married status</Label>
-                    <Select>
+                    <Select
+                    onValueChange={(Value)=>{
+                      setFormData({...formData,MarriedStatus:Value})
+                    }} 
+                    >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a gender" />
                       </SelectTrigger>

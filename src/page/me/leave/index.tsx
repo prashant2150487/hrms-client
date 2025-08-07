@@ -16,7 +16,6 @@ import { useState } from "react";
 import Chart from "./chart";
 import { Calendar } from "@/components/ui/calendar";
 import "react-day-picker/dist/style.css";
-
 import type { DateRange } from "react-day-picker";
 import {
   Select,
@@ -34,17 +33,16 @@ type DateRange = {
   from: Date | undefined;
   to: Date | undefined;
 };
-
 const Leave = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [showCalender, setShowCalender] = useState<boolean>(false);
+  const [startDate,setStartDate]=useState([])
+  const [endDate,setEndDate]=useState([])
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: new Date(2025, 5, 17),
     to: new Date(2025, 5, 20),
   });
-
   console.log(dateRange);
-
   return (
     <div className="p-3">
       <Chart />
