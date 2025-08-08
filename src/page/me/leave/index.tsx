@@ -11,8 +11,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { X } from "lucide-react";
-import { useState } from "react";
+import { Check, ChevronsUpDown, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import Chart from "./chart";
 import { Calendar } from "@/components/ui/calendar";
 import "react-day-picker/dist/style.css";
@@ -29,20 +29,78 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import axiosInstance from "@/lib/axios";
+import { Badge } from "@/components/ui/badge";
+
 type DateRange = {
   from: Date | undefined;
   to: Date | undefined;
 };
+type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  _id: string;
+};
 const Leave = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [showCalender, setShowCalender] = useState<boolean>(false);
-  const [startDate,setStartDate]=useState([])
-  const [endDate,setEndDate]=useState([])
+  const [show, setShow] = useState<boolean>(false);
+  const [notifyText, setNotifyText] = useState<string>("");
+  const [notifyUsers, setNotifyUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  // const [open, setOpen] = React.useState(false)
+  const [value, setValue] = useState("");
+  // const [showCalender, setShowCalender] = useState<boolean>(false);
+  // const [startDate,setStartDate]=useState([])
+  // const [endDate,setEndDate]=useState([])
+
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: new Date(2025, 5, 17),
     to: new Date(2025, 5, 20),
   });
-  console.log(dateRange);
+  const handleRequest = async () => {
+    try {
+      const response = await axiosInstance.post("/api/v1/leave/apply-leave", {
+        startDate: "2025-08-10",
+        endDate: "2025-08-15",
+        leaveType: "Sick Leave",
+        reason: "Medical treatment",
+        notifyTo: ["6890e366fc5d02e19d3c216a"],
+      });
+    } catch (err) {
+      console.log(err, "error");
+    }
+  };
+  const getNotifyUser = async () => {
+    // setShow(true);
+    // setNotifyText(e.target.value);
+    // if (e.length < 3) {
+    //   return;
+    // }
+    try {
+      const response = await axiosInstance(
+        `/v1/leave/notifyUser?search=${notifyText}`
+      );
+      if (response.status === 200) {
+        setNotifyUsers(response.data.data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  console.log(notifyUsers, "terter");
+  useEffect(() => {
+    if (notifyText.length < 3) return;
+    const handler = setTimeout(() => {
+      getNotifyUser();
+    }, 1000);
+    return () => clearTimeout(handler);
+  }, [notifyText]);
+
+  const handleSelect = (item: User) => {
+    setSelectedUsers([...selectedUsers, item]);
+  };
+  console.log(selectedUsers, "selectedUsers");
   return (
     <div className="p-3">
       <Chart />
@@ -91,17 +149,54 @@ const Leave = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
-
             <div className="grid w-[100] mx-4 mt-4 gap-3">
               <Label htmlFor="message">Your message</Label>
               <Textarea placeholder="Type here" className="border-gray-300" />
             </div>
             <div className="grid w-[100]  m-4 items-center gap-3">
               <Label htmlFor="picture">Notify</Label>
-              <Input
-                placeholder="Search Employee"
-                className="border-gray-300"
-              />
+              <div className="flex items-center gap-1 border-1 px-2 py-1 rounded-md">
+                {selectedUsers.map((item, index) => (
+                  <Badge key={index} variant="outline">
+                    {item?.firstName + " " + item?.lastName}
+                  </Badge>
+                ))}
+
+                <Input
+                  onChange={(e) => setNotifyText(e.target.value)}
+                  placeholder="Search Employee"
+                  className="border-gray-300 border-0 focus:outline-none"
+                />
+              </div>
+              {notifyUsers.length > 0 && notifyText.length > 2 && (
+                <ul className="divide-y divide-gray-200 border-1 border-gray-300 p-3 max-w-md rounded-lg">
+                  {notifyUsers.map((item, index) => (
+                    <li
+                      key={index}
+                      className="pb-3 sm:pb-4"
+                      onClick={() => handleSelect(item)}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <div className="shrink-0">
+                          <img
+                            className="w-9 h-9 rounded-full "
+                            src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                            alt="Prashant"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0 gap-1">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {item?.firstName + item?.lastName}
+                          </p>
+                          <p className="text-sm font-medium text-gray-500">
+                            {item?.email}
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             {/* <Calendar
               mode="range"
@@ -125,7 +220,11 @@ const Leave = () => {
                   Cancel
                 </Button>
               </DrawerClose>
-              <Button variant="destructive" className="bg-black text-white">
+              <Button
+                onClick={handleRequest}
+                variant="destructive"
+                className="bg-black text-white"
+              >
                 Request
               </Button>
             </DrawerFooter>
