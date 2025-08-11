@@ -50,9 +50,7 @@ const Leave = () => {
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   // const [open, setOpen] = React.useState(false)
   const [value, setValue] = useState("");
-  // const [showCalender, setShowCalender] = useState<boolean>(false);
-  // const [startDate,setStartDate]=useState([])
-  // const [endDate,setEndDate]=useState([])
+  const [showCalender, setShowCalender] = useState<boolean>(false);
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: new Date(2025, 5, 17),
@@ -100,6 +98,12 @@ const Leave = () => {
   const handleSelect = (item: User) => {
     setSelectedUsers([...selectedUsers, item]);
   };
+  const handleRemoveUser = (index: number) => {
+    setSelectedUsers([
+      ...selectedUsers.slice(0, index),
+      ...selectedUsers.slice(index + 1),
+    ]);
+  };
   console.log(selectedUsers, "selectedUsers");
   return (
     <div className="p-3">
@@ -126,7 +130,7 @@ const Leave = () => {
               </Button>
             </DrawerHeader>
             <div className="border-1 border-gray-300 grid grid-cols-2 p-4 m-4 rounded-md">
-              <div className="flex flex-col items-start justify-center">
+              <div className="flex flex-col items-start justify-center cursor-pointer" onClick={()=>setShowCalender(!showCalender)}>
                 <p className="text-gray-600 text-sm">From</p>
                 <p className="text-base">Select Date</p>
               </div>
@@ -135,6 +139,25 @@ const Leave = () => {
                 <p className="text-base">Select Date</p>
               </div>
             </div>
+            {showCalender && (
+              <Calendar
+                mode="range"
+                defaultMonth={dateRange?.from}
+                selected={dateRange}
+                onSelect={setDateRange}
+                numberOfMonths={1}
+                disabled={{ dayOfWeek: [0, 6] }}
+                className=" border-0 shadow-md bg-red"
+                classNames={{
+                  range_start: "bg-black text-white rounded-md text-bold",
+                  range_end: "bg-black text-white rounded-md",
+                  selected: "border-0 rounded-md bg-black text-white",
+                  day: "border-0",
+                }}
+                excludeDisabled
+              />
+            )}
+
             <Select>
               <SelectTrigger className="w-[100] mx-4 border-gray-300">
                 <SelectValue placeholder="Select leave type" />
@@ -157,8 +180,14 @@ const Leave = () => {
               <Label htmlFor="picture">Notify</Label>
               <div className="flex items-center gap-1 border-1 px-2 py-1 rounded-md">
                 {selectedUsers.map((item, index) => (
-                  <Badge key={index} variant="outline">
+                  <Badge
+                    key={index}
+                    variant="default"
+                    className="bg-gray-200 cursor-pointer"
+                    onClick={() => handleRemoveUser(index)}
+                  >
                     {item?.firstName + " " + item?.lastName}
+                    <X />
                   </Badge>
                 ))}
 
@@ -173,7 +202,7 @@ const Leave = () => {
                   {notifyUsers.map((item, index) => (
                     <li
                       key={index}
-                      className="pb-3 sm:pb-4"
+                      className="pb-3 sm:pb-4 cursor-pointer"
                       onClick={() => handleSelect(item)}
                     >
                       <div className="flex items-center space-x-2">
@@ -198,22 +227,7 @@ const Leave = () => {
                 </ul>
               )}
             </div>
-            {/* <Calendar
-              mode="range"
-              defaultMonth={dateRange?.from}
-              selected={dateRange}
-              onSelect={setDateRange}
-              numberOfMonths={1}
-              disabled={{ dayOfWeek: [0, 6] }}
-              className=" border-0 shadow-md bg-red"
-              classNames={{
-                range_start: "bg-black text-white rounded-md text-bold",
-                range_end: "bg-black text-white rounded-md",
-                selected: "border-0 rounded-md bg-black text-white",
-                day: "border-0",
-              }}
-              excludeDisabled
-            /> */}
+
             <DrawerFooter className="flex flex-row justify-end items-center border-t-1 border-gray-300">
               <DrawerClose asChild>
                 <Button variant="outline" className="border-gray-300">
