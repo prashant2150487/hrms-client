@@ -103,6 +103,16 @@ const Leave = () => {
       ...selectedUsers.slice(index + 1),
     ]);
   };
+  const handleSelectDate = (date:Date) => {
+    if (startShowCalender) {
+      setStartDate(date);
+      setStartShowCalender(false);
+    }
+    if (endShowCalender) {
+      setEndDate(date);
+      setEndShowCalender(false);
+    }
+  };
   console.log(selectedUsers, "selectedUsers");
   return (
     <div className="p-3">
@@ -148,16 +158,7 @@ const Leave = () => {
               <Calendar
                 mode="single"
                 selected={startShowCalender ? startDate : endDate}
-                onSelect={(date) => {
-                  if (startShowCalender) {
-                    setStartDate(date);
-                    setStartShowCalender(false);
-                  }
-                  if (endShowCalender) {
-                    setEndDate(date);
-                    setEndShowCalender(false);
-                  }
-                }}
+                onSelect={(date) => handleSelectDate(date)}
                 className="rounded-md border shadow-sm"
                 captionLayout="dropdown"
                 disabled={{ dayOfWeek: [0, 6] }}
@@ -166,7 +167,7 @@ const Leave = () => {
                   range_end: "bg-black text-white rounded-md",
                   selected: "border-0 rounded-md bg-black text-white",
                   day: "border-0",
-                     today: "bg-blue-500 text-white rounded-md", 
+                  today: "bg-blue-500 text-white rounded-md",
                 }}
               />
             )}
