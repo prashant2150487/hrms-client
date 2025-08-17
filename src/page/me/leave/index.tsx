@@ -67,6 +67,14 @@ const Leave = () => {
       console.log(err, "error");
     }
   };
+    const formatDate = (date: Date | undefined) => {
+    if (!date) return "Select Date";
+    return date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
   console.log(startDate, "dfgdfg");
   const getNotifyUser = async () => {
     // setShow(true);
@@ -97,6 +105,7 @@ const Leave = () => {
   const handleSelect = (item: User) => {
     setSelectedUsers([...selectedUsers, item]);
   };
+  
   const handleRemoveUser = (index: number) => {
     setSelectedUsers([
       ...selectedUsers.slice(0, index),
@@ -144,7 +153,7 @@ const Leave = () => {
                 onClick={() => setStartShowCalender(!startShowCalender)}
               >
                 <p className="text-gray-600 text-sm">From</p>
-                <p className="text-base">Select Date</p>
+                <p className="text-base">{formatDate(startDate)}</p>
               </div>
               <div
                 className="flex flex-col items-end center"
