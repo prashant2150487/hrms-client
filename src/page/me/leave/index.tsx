@@ -50,12 +50,10 @@ const Leave = () => {
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   // const [open, setOpen] = React.useState(false)
   const [value, setValue] = useState("");
-  const [showCalender, setShowCalender] = useState<boolean>(false);
-
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
-    from: new Date(2025, 5, 17),
-    to: new Date(2025, 5, 20),
-  });
+  const [startShowCalender, setStartShowCalender] = useState<boolean>(false);
+  const [endShowCalender, setEndShowCalender] = useState<boolean>(false);
+  const [endDate, setEndDate] = useState<Date | undefined>(new Date());
+  const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const handleRequest = async () => {
     try {
       const response = await axiosInstance.post("/api/v1/leave/apply-leave", {
@@ -69,6 +67,7 @@ const Leave = () => {
       console.log(err, "error");
     }
   };
+  console.log(startDate, "dfgdfg");
   const getNotifyUser = async () => {
     // setShow(true);
     // setNotifyText(e.target.value);
@@ -130,31 +129,45 @@ const Leave = () => {
               </Button>
             </DrawerHeader>
             <div className="border-1 border-gray-300 grid grid-cols-2 p-4 m-4 rounded-md">
-              <div className="flex flex-col items-start justify-center cursor-pointer" onClick={()=>setShowCalender(!showCalender)}>
+              <div
+                className="flex flex-col items-start justify-center cursor-pointer"
+                onClick={() => setStartShowCalender(!startShowCalender)}
+              >
                 <p className="text-gray-600 text-sm">From</p>
                 <p className="text-base">Select Date</p>
               </div>
-              <div className="flex flex-col items-end center">
+              <div
+                className="flex flex-col items-end center"
+                onClick={() => setEndShowCalender(!endShowCalender)}
+              >
                 <p className="text-gray-600 text-sm">To</p>
                 <p className="text-base">Select Date</p>
               </div>
             </div>
-            {showCalender && (
+            {(startShowCalender || endShowCalender) && (
               <Calendar
-                mode="range"
-                defaultMonth={dateRange?.from}
-                selected={dateRange}
-                onSelect={setDateRange}
-                numberOfMonths={1}
+                mode="single"
+                selected={startShowCalender ? startDate : endDate}
+                onSelect={(date) => {
+                  if (startShowCalender) {
+                    setStartDate(date);
+                    setStartShowCalender(false);
+                  }
+                  if (endShowCalender) {
+                    setEndDate(date);
+                    setEndShowCalender(false);
+                  }
+                }}
+                className="rounded-md border shadow-sm"
+                captionLayout="dropdown"
                 disabled={{ dayOfWeek: [0, 6] }}
-                className=" border-0 shadow-md bg-red"
                 classNames={{
                   range_start: "bg-black text-white rounded-md text-bold",
                   range_end: "bg-black text-white rounded-md",
                   selected: "border-0 rounded-md bg-black text-white",
                   day: "border-0",
+                     today: "bg-blue-500 text-white rounded-md", 
                 }}
-                excludeDisabled
               />
             )}
 

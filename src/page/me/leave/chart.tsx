@@ -76,15 +76,15 @@ export function Chart() {
           <div className="flex items-start gap-3">
             <div className=" mt-2 w-4 h-4 rounded-full border border-gray-500"></div>
             <div className="flex flex-col items-start gap-1">
-              <h1 className="text-xl text-gray-800">Availble</h1>
-              <h1 className="text-xl text-gray-800">5</h1>
+              <h1 className="text-sm text-gray-800 font-bold">Availble</h1>
+              <h1 className="text-sm text-gray-800">5</h1>
             </div>
           </div>
           <div className="flex items-start gap-3">
           <div className=" mt-2 w-4 h-4 rounded-full border border-gray-500"></div>
           <div className="flex flex-col items-start gap-1">
-            <h1 className="text-xl text-gray-800">Availble</h1>
-            <h1 className="text-xl text-gray-800">2</h1>
+            <h1 className="text-sm text-gray-800 font-bold">Availble</h1>
+            <h1 className="text-sm text-gray-800">2</h1>
           </div>
         </div>
         </div>
