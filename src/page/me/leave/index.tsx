@@ -52,11 +52,11 @@ const Leave = () => {
   const [value, setValue] = useState("");
   const [startShowCalender, setStartShowCalender] = useState<boolean>(false);
   const [endShowCalender, setEndShowCalender] = useState<boolean>(false);
-  const [endDate, setEndDate] = useState<Date | undefined>(new Date());
+  const [endDate, setEndDate] = useState<Date | undefined>("");
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const handleRequest = async () => {
     try {
-      const response = await axiosInstance.post("/api/v1/leave/apply-leave", {
+      const response = await axiosInstance.post("/v1/leave/apply-leave", {
         startDate: "2025-08-10",
         endDate: "2025-08-15",
         leaveType: "Sick Leave",
@@ -67,7 +67,7 @@ const Leave = () => {
       console.log(err, "error");
     }
   };
-    const formatDate = (date: Date | undefined) => {
+  const formatDate = (date: Date | undefined) => {
     if (!date) return "Select Date";
     return date.toLocaleDateString("en-IN", {
       day: "2-digit",
@@ -105,14 +105,14 @@ const Leave = () => {
   const handleSelect = (item: User) => {
     setSelectedUsers([...selectedUsers, item]);
   };
-  
+
   const handleRemoveUser = (index: number) => {
     setSelectedUsers([
       ...selectedUsers.slice(0, index),
       ...selectedUsers.slice(index + 1),
     ]);
   };
-  const handleSelectDate = (date:Date) => {
+  const handleSelectDate = (date: Date) => {
     if (startShowCalender) {
       setStartDate(date);
       setStartShowCalender(false);
@@ -122,7 +122,6 @@ const Leave = () => {
       setEndShowCalender(false);
     }
   };
-  console.log(selectedUsers, "selectedUsers");
   return (
     <div className="p-3">
       <Chart />
@@ -159,8 +158,8 @@ const Leave = () => {
                 className="flex flex-col items-end center"
                 onClick={() => setEndShowCalender(!endShowCalender)}
               >
-                <p className="text-gray-600 text-sm">To</p>
-                <p className="text-base">Select Date</p>
+                <p className="text-gray-600 text-sm">To </p>
+                <p className="text-base">{formatDate(endDate)}</p>
               </div>
             </div>
             {(startShowCalender || endShowCalender) && (
