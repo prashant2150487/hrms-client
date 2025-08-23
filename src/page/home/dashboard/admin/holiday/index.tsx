@@ -146,13 +146,15 @@ const Holiday = () => {
       <div className="p-6 space-y-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-semibold text-gray-800">Holidays</h1>
-          <Input
-            placeholder="Search holiday name..."
-            className="max-w-sm"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <Button></Button>
+          <div className=" flex items-center gap-2 ">
+            <Input
+              placeholder="Search holiday name..."
+              className="max-w-lg"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <Button className="border border-gray-800 bg-black text-white"> Add Holiday</Button>
+          </div>
         </div>
 
         <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -167,7 +169,7 @@ const Holiday = () => {
                   Classification
                 </TableHead>
                 <TableHead className="flex items-center">Description</TableHead>
-                <TableHead className="text-right">Action</TableHead>
+                <TableHead className="text-right flex items-center justify-end">Action</TableHead>
               </TableRow>
             </TableHeader>
 
@@ -180,7 +182,9 @@ const Holiday = () => {
                   <TableCell className="py-3 font-medium flex items-center">
                     {item.name}
                   </TableCell>
-                  <TableCell className="py-3 flex items-center">{item.date}</TableCell>
+                  <TableCell className="py-3 flex items-center">
+                    {item.date}
+                  </TableCell>
                   <TableCell className="py-3 flex items-center">
                     <Badge variant="outline">{item.location || "-"}</Badge>
                   </TableCell>
@@ -239,8 +243,8 @@ const Holiday = () => {
         </div>
 
         {/* Drawer for Edit */}
-        <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-          <DrawerContent>
+        <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} direction="right">
+          <DrawerContent className="bg-white">
             <DrawerHeader>
               <DrawerTitle>Edit Holiday</DrawerTitle>
             </DrawerHeader>
