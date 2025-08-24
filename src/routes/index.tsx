@@ -10,6 +10,7 @@ import Leave from "@/page/me/leave";
 import ResetPassword from "@/page/resetPassword";
 import CreateNewPassword from "@/page/createPassword";
 import Holiday from "@/page/home/dashboard/admin/holiday";
+import ManageLeaves from "@/page/home/dashboard/admin/manageLeaves";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
   {
     path: "/admin/holiday",
     element: <Holiday />,
+  },
+  {
+    path:"/admin/manage-leaves",
+    element:
+    <Dashboard>
+      <ManageLeaves/>
+    
+    </Dashboard>
   },
   {
     path: "/me/attendance",
