@@ -11,12 +11,11 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Check, ChevronsUpDown, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import Chart from "./chart";
 import { Calendar } from "@/components/ui/calendar";
 import "react-day-picker/dist/style.css";
-import type { DateRange } from "react-day-picker";
 import {
   Select,
   SelectContent,
@@ -31,11 +30,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import axiosInstance from "@/lib/axios";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
-type DateRange = {
-  from: Date | undefined;
-  to: Date | undefined;
-};
+
 type User = {
   firstName: string;
   lastName: string;
@@ -44,15 +41,14 @@ type User = {
 };
 const Leave = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [show, setShow] = useState<boolean>(false);
+  // const [show, setShow] = useState<boolean>(false);
   const [notifyText, setNotifyText] = useState<string>("");
   const [notifyUsers, setNotifyUsers] = useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   // const [open, setOpen] = React.useState(false)
-  const [value, setValue] = useState("");
   const [startShowCalender, setStartShowCalender] = useState<boolean>(false);
   const [endShowCalender, setEndShowCalender] = useState<boolean>(false);
-  const [endDate, setEndDate] = useState<Date | undefined>("");
+  const [endDate, setEndDate] = useState<Date | undefined>(new Date());
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const handleRequest = async () => {
     try {
@@ -63,6 +59,10 @@ const Leave = () => {
         reason: "Medical treatment",
         notifyTo: ["6890e366fc5d02e19d3c216a"],
       });
+      if (response.status === 201) {
+        toast.success("Leave request sent successfully");
+        setOpen(false);
+      }
     } catch (err) {
       console.log(err, "error");
     }
@@ -168,7 +168,7 @@ const Leave = () => {
               <Calendar
                 mode="single"
                 selected={startShowCalender ? startDate : endDate}
-                onSelect={(date) => handleSelectDate(date)}
+                onSelect={(date) => handleSelectDate(date as Date)}
                 className="rounded-md border shadow-sm"
                 captionLayout="dropdown"
                 disabled={{ dayOfWeek: [0, 6] }}

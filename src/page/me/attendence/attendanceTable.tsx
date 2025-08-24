@@ -22,6 +22,8 @@ interface AttendanceRecord {
   specialStatus?: 'W-OFF' | 'LEAVE' | 'SICK';
   statusType?: 'weekly-off' | 'leave' | 'sick' | 'present';
   hasLocation?: boolean;
+  totalHours?: string;
+  status?: string;
 } 
 const AttendanceTable: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('30 DAYS');
@@ -141,7 +143,7 @@ const AttendanceTable: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-700">
-                {attendanceData?.map((record, index) => (
+                {attendanceData?.map((record : AttendanceRecord, index : number) => (
                   <tr 
                     key={index} 
                     className="hover:bg-slate-700/30 transition-colors duration-200"

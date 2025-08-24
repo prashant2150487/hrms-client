@@ -8,10 +8,10 @@ import axiosInstance from "./lib/axios";
 import { setUser } from "./features/user";
 import type { RootState } from "./store";
 import Spinner from "./components/Spinner";
-
+import { Toaster } from "./components/ui/sonner";
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.userInfo.user); 
+  const user = useSelector((state: RootState) => state.userInfo.user);
 
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
@@ -31,7 +31,8 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-      <Spinner/>
+      <Toaster position="top-center" richColors/>
+      <Spinner />
     </>
   );
 }

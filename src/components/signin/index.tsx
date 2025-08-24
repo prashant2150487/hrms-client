@@ -8,6 +8,7 @@ import type { AxiosResponse } from "axios";
 import { EyeOff } from "lucide-react";
 import { Eye } from "lucide-react";
 import { hideLoader, showLoader } from "@/features/loader";
+import { toast } from "sonner";
 
 interface LoginUser {
   id: string;
@@ -58,10 +59,12 @@ const Login = () => {
       dispatch(setUser(response.data.data));
       if (response.data?.success) {
         navigate("/home/dashboard");
+        toast.success(response.data?.message || "Login successful")
       }
 
       // You can store token here if returned: localStorage.setItem("token", response.data.token);
     } catch (error: any) {
+      toast.error(error?.response?.data?.message || error?.message)
       console.error("Login failed:", error.response?.data || error.message);
     } finally {
       setIsLoading(false);

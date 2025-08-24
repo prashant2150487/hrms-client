@@ -61,7 +61,7 @@ export function Chart() {
                 nameKey="browser"
                 innerRadius={40}
                 strokeWidth={5}
-                activeIndex={0}
+                // activeIndex={0}
                 activeShape={({
                   outerRadius = 0,
                   ...props
