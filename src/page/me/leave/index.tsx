@@ -104,6 +104,8 @@ const Leave = () => {
 
   const handleSelect = (item: User) => {
     setSelectedUsers([...selectedUsers, item]);
+    setNotifyText("");
+    setNotifyUsers([]);
   };
 
   const handleRemoveUser = (index: number) => {
@@ -216,7 +218,8 @@ const Leave = () => {
                 <Input
                   onChange={(e) => setNotifyText(e.target.value)}
                   placeholder="Search Employee"
-                  className="border-gray-300 border-0 focus:outline-none"
+                  value={notifyText}
+                  className="border-gray-300 border-0 focus:outline-none outline-none focus-visible:ring-0"
                 />
               </div>
               {notifyUsers.length > 0 && notifyText.length > 2 && (
