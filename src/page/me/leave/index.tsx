@@ -31,6 +31,8 @@ import { Input } from "@/components/ui/input";
 import axiosInstance from "@/lib/axios";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import SecondaryHeader from "@/components/SecondaryHeader";
+import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
 
 
 type User = {
@@ -126,6 +128,7 @@ const Leave = () => {
   };
   return (
     <div className="p-3">
+      <SecondaryHeader data={secondaryHeaderData?.me} />
       <Chart />
       <div className="flex justify-end">
         <Drawer open={open} onOpenChange={setOpen} direction="right">

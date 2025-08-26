@@ -15,6 +15,7 @@ import axiosInstance from "@/lib/axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import RejectPopup from "./RejectPopup";
+import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
 const ManageLeaves = () => {
   const [allLeaves, setAllLeaves] = useState([]);
   const [rejectLeaveId, setRejectLeaveId] = useState();
@@ -55,7 +56,7 @@ const ManageLeaves = () => {
   };
   return (
     <>
-      <SecondaryHeader data={["Onboard", "Holiday", "Manage Leaves"]} />
+      <SecondaryHeader data={secondaryHeaderData.admin} />
       {show && <RejectPopup setShow={setShow} rejectLeaveId={rejectLeaveId} fetchAllLeaves={fetchAllLeaves} />}
       <Table>
         <TableHeader>

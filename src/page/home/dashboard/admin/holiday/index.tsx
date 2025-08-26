@@ -19,6 +19,7 @@ import {
 import { Pencil, Trash2 } from "lucide-react";
 import Dashboard from "@/components/sidebar";
 import SecondaryHeader from "@/components/SecondaryHeader";
+import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
 
 interface Holiday {
   id: string;
@@ -142,7 +143,7 @@ const Holiday = () => {
 
   return (
     <Dashboard>
-      <SecondaryHeader data={data} />
+      <SecondaryHeader data={secondaryHeaderData?.admin} />
       <div className="p-6 space-y-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-semibold text-gray-800">Holidays</h1>

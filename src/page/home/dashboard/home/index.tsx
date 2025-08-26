@@ -11,12 +11,12 @@ import {
 import { ArrowUpRight, Calendar1 } from "lucide-react";
 import { ClockInCard } from "./ClockInCard";
 import SecondaryHeader from "@/components/SecondaryHeader";
+import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
 
-const data = ["Dashboard", "Me", ];
 const Home = () => {
   return (
     <Dashboard>
-      <SecondaryHeader data={data} />
+      <SecondaryHeader data={secondaryHeaderData.home} />
       <div className="grid grid-cols-4 gap-4 p-4">
         <Card className="border-0 bg-white rounded-3xl">
           <CardHeader>

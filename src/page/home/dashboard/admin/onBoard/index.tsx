@@ -41,7 +41,7 @@ import { hideLoader, showLoader } from "@/features/loader";
 import { jobRoles } from "@/constants/role";
 import AllDepartments from "@/constants/departments";
 import AllDesignations from "@/constants/designation";
-const data = ["Onboard", "Holiday"];
+import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
 const initialFormData = {
   firstName: "",
   lastName: "",
@@ -219,7 +219,7 @@ const Onboard = () => {
   }, []);
   return (
     <Dashboard>
-      <SecondaryHeader data={data} />
+      <SecondaryHeader data={secondaryHeaderData.admin} />
       <div className="flex justify-end w-full mb-4">
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>

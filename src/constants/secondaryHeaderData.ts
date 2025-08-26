@@ -11,8 +11,8 @@ export const secondaryHeaderData = {
   ],
   me: [
     {
-      title: "Attendence",
-      url: "/me/attendence",
+      title: "Attendance",
+      url: "/me/attendance",
     },
     {
       title: "Leave",

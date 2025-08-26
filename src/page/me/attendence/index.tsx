@@ -1,13 +1,13 @@
 import SecondaryHeader from "@/components/SecondaryHeader";
 import AttendanceTable from "./attendanceTable";
+import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
 
 
 
-const data = ["Attendance", "leave"];
 const Attendance = () => {
   return (
     <div>
-       <SecondaryHeader data={data} />
+       <SecondaryHeader data={secondaryHeaderData?.me} />
       <AttendanceTable />
     </div>
   );
