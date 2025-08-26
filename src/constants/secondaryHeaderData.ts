@@ -1,4 +1,4 @@
-const data = {
+export const secondaryHeaderData = {
   home: [
     {
       title: "Dashboard",
@@ -23,16 +23,16 @@ const data = {
   myTeams: [],
   admin: [
     {
-      title: "Attendence",
-      url: "/me/attendence",
+      title: "Onboard",
+      url: "/admin/onboard",
     },
     {
-      title: "Leave",
-      url: "/me/leave",
+      title: "Holiday",
+      url: "/me/holiday",
     },
     {
-      title: "Attendence",
-      url: "/me/attendence",
+      title: "Manage Leave",
+      url: "/me/manage-leave",
     },
   ],
 };
