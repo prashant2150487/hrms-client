@@ -8,10 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { hideLoader, showLoader } from "@/features/loader";
 import axiosInstance from "@/lib/axios";
 import { getCurrentLocation } from "@/utils/getCurrentLocation";
 import { ArrowUpRight, Calendar1 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export const ClockInCard = () => {
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -21,7 +23,7 @@ export const ClockInCard = () => {
   const today = useRef(new Date().toDateString());
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
+  const dispatch =useDispatch()
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       const now = new Date();
@@ -42,11 +44,14 @@ export const ClockInCard = () => {
   }, []);
   const fetchClockInStatus = async () => {
     try {
+      dispatch(showLoader())
       const response = await axiosInstance("/v1/attendance/status");
 
       setIsClockedIn(response.data.isClockIn);
     } catch (error) {
       console.log(error);
+    }finally{
+      dispatch(hideLoader())
     }
   };
   useEffect(() => {
@@ -55,6 +60,7 @@ export const ClockInCard = () => {
 
   const handClockClick = async () => {
     try {
+      dispatch(showLoader())  
       const { latitude, longitude } = await getCurrentLocation();
       if (isClockedIn) {
         const response = await axiosInstance.post("/v1/attendance/webClockOut");
@@ -64,10 +70,12 @@ export const ClockInCard = () => {
           latitude,
           longitude,
         });
-        fetchClockInStatus();
+        await fetchClockInStatus();
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      dispatch(hideLoader())
     }
   };
   return (
