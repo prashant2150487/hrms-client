@@ -5,8 +5,8 @@ export const secondaryHeaderData = {
       url: "/home/dashboard",
     },
     {
-      title: "Me",
-      url: "/home/me",
+      title: "Welcome",
+      url: "/home/welcome",
     },
   ],
   me: [
@@ -28,11 +28,11 @@ export const secondaryHeaderData = {
     },
     {
       title: "Holiday",
-      url: "/me/holiday",
+      url: "/admin/holiday",
     },
     {
       title: "Manage Leave",
-      url: "/me/manage-leave",
+      url: "/admin/manage-leaves",
     },
   ],
 };

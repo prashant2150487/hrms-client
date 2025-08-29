@@ -33,7 +33,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import SecondaryHeader from "@/components/SecondaryHeader";
 import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
-
+import LeavesHistoryTable from "./leavesHistoryTable";
 
 type User = {
   firstName: string;
@@ -278,6 +278,7 @@ const Leave = () => {
         <LeaveCalender />
         <OtherLeaves />
       </div>
+      <LeavesHistoryTable />
     </div>
   );
 };
