@@ -20,7 +20,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import Dashboard from "@/components/sidebar";
 import SecondaryHeader from "@/components/SecondaryHeader";
 import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
-
+import HolidayPopUp from "./holidayPopup";
 interface Holiday {
   id: string;
   name: string;
@@ -37,10 +37,9 @@ const Holiday = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const perPage = 15;
-
   const [selectedHoliday, setSelectedHoliday] = useState<Holiday | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  const [show, setShow] = useState(false);
   useEffect(() => {
     const dummy: Holiday[] = [
       {
@@ -119,7 +118,9 @@ const Holiday = () => {
     setHolidays(dummy);
     setFiltered(dummy);
   }, []);
-
+  const handleClick = () => {
+    setShow(!show);
+  };
   useEffect(() => {
     const filteredData = holidays.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
@@ -154,7 +155,13 @@ const Holiday = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <Button className="border border-gray-800 bg-black text-white"> Add Holiday</Button>
+            <Button
+              onClick={handleClick}
+              className="border border-gray-800 bg-black text-white"
+            >
+              {" "}
+              Add Holiday
+            </Button>
           </div>
         </div>
 
@@ -170,7 +177,9 @@ const Holiday = () => {
                   Classification
                 </TableHead>
                 <TableHead className="flex items-center">Description</TableHead>
-                <TableHead className="text-right flex items-center justify-end">Action</TableHead>
+                <TableHead className="text-right flex items-center justify-end">
+                  Action
+                </TableHead>
               </TableRow>
             </TableHeader>
 
@@ -244,7 +253,11 @@ const Holiday = () => {
         </div>
 
         {/* Drawer for Edit */}
-        <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} direction="right">
+        <Drawer
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
+          direction="right"
+        >
           <DrawerContent className="bg-white">
             <DrawerHeader>
               <DrawerTitle>Edit Holiday</DrawerTitle>
@@ -273,6 +286,7 @@ const Holiday = () => {
           </DrawerContent>
         </Drawer>
       </div>
+      {show && <HolidayPopUp setShow={setShow}  />}
     </Dashboard>
   );
 };
