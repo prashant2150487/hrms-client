@@ -1,27 +1,43 @@
+import { hideLoader, showLoader } from "@/features/loader";
 import axiosInstance from "@/lib/axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
-const HolidayPopUp = ({ setShow }) => {
+const HolidayPopUp = ({
+  setShow,
+  editData,
+  isEdit,
+  fetchHoilday,
+  setIsEdit,
+}) => {
   const [holidayDetail, setHolidayDetail] = useState({
-    title: "",
-    date: "",
-    description: "",
+    title: editData.title || "",
+    date: editData.date || "",
+    description: editData.description || "",
   });
+  const dispatch = useDispatch();
   const handleHoilday = async () => {
     try {
-      const reponse = await axiosInstance.post(
-        "/v1/holiday/create-holiday",
-        holidayDetail
-      );
+      dispatch(showLoader());
+      const reponse = isEdit
+        ? await axiosInstance.put(`/v1/holiday/${editData._id}`, {
+            title: holidayDetail.title,
+            date: holidayDetail.date,
+            description: holidayDetail.description,
+          })
+        : await axiosInstance.post("/v1/holiday/create-holiday", holidayDetail);
       console.log(reponse.data.data);
-      setHolidayDetail(reponse.data.data);
       if (reponse.data.success == true) {
+        fetchHoilday();
         setShow(false);
         toast.success(reponse.data.message);
+        setIsEdit(false);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch(hideLoader());
     }
   };
   const handleChange = (e) => {

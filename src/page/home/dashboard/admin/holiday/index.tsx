@@ -42,14 +42,21 @@ const Holiday = () => {
   const [show, setShow] = useState(false);
   const [deletePopUp, setdeletePopUp] = useState(false);
   const [holidayId, setHolidayId] = useState<string>("");
+  const [editData, setEditData] = useState({});
+  const [isEdit,setIsEdit]=useState<boolean>(false)
   const handleClick = () => {
+    setEditData({})
     setShow(!show);
+  };
+  const handleEdit = (item) => {
+    setShow(true)
+    setEditData(item);
+    setIsEdit(true)
   };
   const handleDelete = (Id) => {
     setdeletePopUp(true);
     setHolidayId(Id);
   };
-
   const fetchHoilday = async () => {
     try {
       const response = await axiosInstance.get("/v1/holiday/all-holidays");
@@ -134,7 +141,11 @@ const Holiday = () => {
                     {item.description || "-"}
                   </TableCell>
                   <TableCell className="py-3 text-right space-x-2">
-                    <Button variant="ghost" size="icon">
+                    <Button
+                      onClick={() => handleEdit(item)}
+                      variant="ghost"
+                      size="icon"
+                    >
                       <Pencil size={16} className="text-blue-600" />
                     </Button>
                     <Button
@@ -207,9 +218,13 @@ const Holiday = () => {
           </DrawerContent>
         </Drawer>
       </div>
-      {show && <HolidayPopUp setShow={setShow} />}
+      {show && <HolidayPopUp setShow={setShow} editData={editData} isEdit={isEdit} fetchHoilday={fetchHoilday} setIsEdit={setIsEdit}/>}
       {deletePopUp && (
-        <DeletePopUp setdeletePopUp={setdeletePopUp} holidayId={holidayId} fetchHoilday={fetchHoilday} />
+        <DeletePopUp
+          setdeletePopUp={setdeletePopUp}
+          holidayId={holidayId}
+          fetchHoilday={fetchHoilday}
+        />
       )}
     </Dashboard>
   );

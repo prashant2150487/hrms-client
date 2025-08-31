@@ -1,8 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import { X } from "lucide-react";
-import { useState } from "react";
 import { toast } from "sonner";
-
 const DeletePopUp = ({ setdeletePopUp, holidayId ,fetchHoilday}) => {
   const DeleteData = async () => {
     try {
@@ -12,7 +10,6 @@ const DeletePopUp = ({ setdeletePopUp, holidayId ,fetchHoilday}) => {
           fetchHoilday()
         setdeletePopUp(false);
         toast.success(response.data.message)
-      
       }
     } catch (error) {
       console.log(error);
