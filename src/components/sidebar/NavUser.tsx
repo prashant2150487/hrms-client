@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { clearUser } from "@/features/user";
 import type { RootState } from "@/store";
-import { LogOut, PiIcon } from "lucide-react";
+import { ChevronsUpDown, LogOut, PiIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -63,11 +63,11 @@ export function NavUser({
                   {userData?.email}
                 </span>
               </div>
-              <PiIcon className="ml-auto size-4" />
+              <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-white border-0"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
