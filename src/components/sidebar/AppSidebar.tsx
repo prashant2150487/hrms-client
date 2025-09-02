@@ -52,7 +52,12 @@ const data = {
       url: "#",
       icon: HeartHandshake,
     },
-
+ {
+      title: "My Finance",
+      url: "/my_Finances/summary",
+      icon: HeartHandshake,
+    },
+   
     // {
     //   title: "Engage",
     //   url: "#",

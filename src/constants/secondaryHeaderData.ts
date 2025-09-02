@@ -21,6 +21,13 @@ export const secondaryHeaderData = {
   ],
   inbox: {},
   myTeams: [],
+  myFinances:[
+    {
+       title: "Summary",
+      url: "/my_Finances/summary",
+    },
+
+  ],
   admin: [
     {
       title: "Onboard",

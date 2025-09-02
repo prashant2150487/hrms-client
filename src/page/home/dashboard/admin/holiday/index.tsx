@@ -68,25 +68,6 @@ const Holiday = () => {
   useEffect(() => {
     fetchHoilday();
   }, []);
-
-  // useEffect(() => {
-  //   const filteredData = holidays.filter((item) =>
-  //     item.name.toLowerCase().includes(query.toLowerCase())
-  //   );
-  //   setFiltered(filteredData);
-  //   setPage(1);
-  // }, [query, holidays]);
-
-  // const handleEdit = (holiday: Holiday) => {
-  //   setSelectedHoliday(holiday);
-  //   setDrawerOpen(true);
-  // };
-
-  // const handleDelete = (id: string) => {
-  //   const updated = holidays.filter((h) => h.id !== id);
-  //   setHolidays(updated);
-  // };
-
   return (
     <Dashboard>
       <SecondaryHeader data={secondaryHeaderData?.admin} />
@@ -109,7 +90,6 @@ const Holiday = () => {
             </Button>
           </div>
         </div>
-
         <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
           <Table>
             <TableHeader className="bg-gray-100">
@@ -146,7 +126,7 @@ const Holiday = () => {
                       variant="ghost"
                       size="icon"
                     >
-                      <Pencil size={16} className="text-blue-600" />
+                    <Pencil size={16} className="text-blue-600" />
                     </Button>
                     <Button
                       variant="ghost"
