@@ -114,7 +114,7 @@ const Holiday = () => {
                     {item.title}
                   </TableCell>
                   <TableCell className="py-3 flex items-center">
-                    {item.date}
+                    {item?.date?.split("T")?.[0]}
                   </TableCell>
 
                   <TableCell className="py-3 flex items-center">
