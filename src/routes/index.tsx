@@ -58,12 +58,12 @@ const router = createBrowserRouter([
       </Dashboard>
     ),
   },
-   {
-    path: "/admin/leave-plicy",
+  {
+    path: "/admin/leave-policy",
     element: (
       <Dashboard>
-     <LeavePolicy/>
-      </Dashboard>
+        <LeavePolicy />
+      </Dashboard>  
     ),
   },
   {
@@ -86,7 +86,7 @@ const router = createBrowserRouter([
     path: "/my_Finances/summary",
     element: (
       <Dashboard>
-        <Summary/>
+        <Summary />
       </Dashboard>
     ),
   },
