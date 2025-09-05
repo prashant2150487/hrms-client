@@ -41,5 +41,9 @@ export const secondaryHeaderData = {
       title: "Manage Leave",
       url: "/admin/manage-leaves",
     },
+     {
+      title: "Leave Policy",
+      url: "/admin/leave-policy",
+    },
   ],
 };

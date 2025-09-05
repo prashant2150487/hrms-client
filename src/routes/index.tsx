@@ -12,6 +12,7 @@ import CreateNewPassword from "@/page/createPassword";
 import Holiday from "@/page/home/dashboard/admin/holiday";
 import ManageLeaves from "@/page/home/dashboard/admin/manageLeaves";
 import Summary from "@/page/myFinance/summary";
+import LeavePolicy from "@/page/home/dashboard/admin/leavePolicy";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -54,6 +55,14 @@ const router = createBrowserRouter([
     element: (
       <Dashboard>
         <ManageLeaves />
+      </Dashboard>
+    ),
+  },
+   {
+    path: "/admin/leave-plicy",
+    element: (
+      <Dashboard>
+     <LeavePolicy/>
       </Dashboard>
     ),
   },
