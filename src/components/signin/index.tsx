@@ -28,8 +28,8 @@ interface LoginResponse {
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "swepra04@gmail.com",
+    password: "Psachan04@",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [viewPassword, setViewPassword] = useState(false);

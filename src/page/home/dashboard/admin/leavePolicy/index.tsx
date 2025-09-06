@@ -19,30 +19,26 @@ import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
 import axiosInstance from "@/lib/axios";
 import { Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import LeavePopup from "./leavePopup";
 
 const LeavePolicy = () => {
   const [polies, setPolies] = useState([]);
-  const [query, setQuery] = useState("");
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  //   const [editData, setEditData] = useState({});
-  //     const [show, setShow] = useState(false);
+  const [query, setQuery] = useState<string>("");
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [showCreatePopup, setShowCreatePopup] = useState<boolean>(false);
   const [selectedHoliday, setSelectedHoliday] = useState<Holiday | null>(null);
-  //   const handleClick = () => {
-  //     setEditData({});
-  //     setShow(!show);
-  //   };
   const fetchPolies = async () => {
     try {
       const response = await axiosInstance.get("/v1/policy");
       console.log(response.data.data);
-      setPolies(response.data?.data)
+      setPolies(response.data?.data);
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(()=>{
-    fetchPolies()
-  })
+  useEffect(() => {
+    fetchPolies();
+  }, []);
   return (
     <>
       <SecondaryHeader data={secondaryHeaderData?.admin} />
@@ -56,8 +52,10 @@ const LeavePolicy = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <Button className="border border-gray-800 bg-black text-white">
-              {" "}
+            <Button
+              onClick={() => setShowCreatePopup(true)}
+              className="border border-gray-800 bg-black text-white"
+            >
               Add Leave Policy
             </Button>
           </div>
@@ -65,39 +63,52 @@ const LeavePolicy = () => {
         <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
           <Table>
             <TableHeader className="bg-gray-100">
-              <TableRow className="grid grid-cols-4 text-sm text-gray-600 px-3">
-                <TableHead className="flex items-center">Name</TableHead>
-                <TableHead className="flex items-center">Date</TableHead>
-
-                <TableHead className="flex items-center">Description</TableHead>
+              <TableRow className="grid grid-cols-6 text-sm text-gray-600 px-3">
+                <TableHead className="flex items-center">Year</TableHead>
+                <TableHead className="flex items-center">PaidLeaves</TableHead>
+                <TableHead className="flex items-center">SickLeaves</TableHead>
+                <TableHead className="flex items-center">
+                  EmergencyLeaves
+                </TableHead>
+                <TableHead className="flex items-center">
+                  Apply Policy
+                </TableHead>
                 <TableHead className="text-right flex items-center justify-end">
-                  Action
+                  IsActive
                 </TableHead>
               </TableRow>
             </TableHeader>
-             <TableBody className="text-sm">
+            <TableBody className="text-sm">
               {polies?.map((item) => (
                 <TableRow
-                  key={item._id}
-                  className="grid grid-cols-4 hover:bg-gray-100 transition px-3"
+                  key={item?._id}
+                  className="grid grid-cols-6  transition px-3"
                 >
                   <TableCell className="py-3 font-medium flex items-center">
-                    {item.title}
+                    {item.year}
+                  </TableCell>
+                  <TableCell className="py-3 font-medium flex items-center">
+                    {item.paidLeaves}
                   </TableCell>
                   <TableCell className="py-3 flex items-center">
-                    {item?.date?.split("T")?.[0]}
+                    {item?.sickLeaves}
                   </TableCell>
 
                   <TableCell className="py-3 flex items-center">
-                    {item.description || "-"}
+                    {item.emergencyLeaves}
                   </TableCell>
-                  <TableCell className="py-3 text-right space-x-2">
+                  <TableCell className="flex items-center">
+                    <Button className=" cursor-pointer shadow-md border border-gray-800 bg-black text-white">
+                      Apply Leave
+                    </Button>
+                  </TableCell>
+                  <TableCell className="py-3 text-right space-x-1">
                     <Button
                       onClick={() => handleEdit(item)}
                       variant="ghost"
                       size="icon"
                     >
-                    <Pencil size={16} className="text-blue-600" />
+                      <Pencil size={16} className="text-blue-600" />
                     </Button>
                     <Button
                       variant="ghost"
@@ -169,6 +180,9 @@ const LeavePolicy = () => {
           </DrawerContent>
         </Drawer>
       </div>
+      {showCreatePopup && (
+        <LeavePopup setShowCreatePopup={setShowCreatePopup} />
+      )}
     </>
   );
 };
