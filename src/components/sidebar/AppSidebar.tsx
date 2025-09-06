@@ -42,16 +42,16 @@ const data = {
       url: "/me/attendance",
       icon: User,
     },
-    {
-      title: "Inbox",
-      url: "/dashboard/inbox",
-      icon: Inbox,
-    },
-    {
-      title: "My Teams",
-      url: "#",
-      icon: HeartHandshake,
-    },
+    // {
+    //   title: "Inbox",
+    //   url: "/dashboard/inbox",
+    //   icon: Inbox,
+    // },
+    // {
+    //   title: "My Teams",
+    //   url: "#",
+    //   icon: HeartHandshake,
+    // },
 
     // {
     //   title: "Engage",
@@ -123,11 +123,7 @@ const data = {
       url: "#",
       icon: Icon,
     },
-    {
-      title: "Search",
-      url: "#",
-      icon: Icon,
-    },
+    
   ],
   documents: [
     {
