@@ -20,6 +20,8 @@ import axiosInstance from "@/lib/axios";
 import { Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import LeavePopup from "./leavePopup";
+import { useDispatch } from "react-redux";
+import { hideLoader, showLoader } from "@/features/loader";
 
 const LeavePolicy = () => {
   const [polies, setPolies] = useState([]);
@@ -27,14 +29,18 @@ const LeavePolicy = () => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [showCreatePopup, setShowCreatePopup] = useState<boolean>(false);
   const [selectedHoliday, setSelectedHoliday] = useState<Holiday | null>(null);
+  const dispatch = useDispatch();
+
   const fetchPolies = async () => {
     try {
+      dispatch(showLoader());
       const response = await axiosInstance.get("/v1/policy");
       console.log(response.data.data);
       setPolies(response.data?.data);
     } catch (error) {
       console.log(error);
     }
+    dispatch(hideLoader());
   };
   useEffect(() => {
     fetchPolies();
@@ -181,7 +187,10 @@ const LeavePolicy = () => {
         </Drawer>
       </div>
       {showCreatePopup && (
-        <LeavePopup setShowCreatePopup={setShowCreatePopup} />
+        <LeavePopup
+          setShowCreatePopup={setShowCreatePopup}
+          fetchPolies={fetchPolies}
+        />
       )}
     </>
   );

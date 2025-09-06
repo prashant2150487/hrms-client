@@ -1,29 +1,35 @@
+import { hideLoader, showLoader } from "@/features/loader";
 import axiosInstance from "@/lib/axios";
 import { useState } from "react";
-import { Handle } from "vaul";
+import { useDispatch } from "react-redux";
 
-const LeavePopup = ({ setShowCreatePopup }) => {
+const LeavePopup = ({ setShowCreatePopup, fetchPolies }) => {
   const [formData, setFormData] = useState({
     paidLeaves: 0,
     sickLeaves: 0,
     emergencyLeaves: 0,
     year: 0,
   });
+  const dispatch = useDispatch();
+
   const createLeavePolicy = async () => {
     try {
+      dispatch(showLoader());
       const response = await axiosInstance.post(
         "/v1/policy/set-policy",
         formData
       );
-      // setFormData(response.data?.data);
-    } catch (error) { 
+      setShowCreatePopup(false);
+      fetchPolies();
+    } catch (error) {
       console.log(error);
     }
+    dispatch(hideLoader());
   };
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({ ...formData, [name]: value === "" ? "" : Number(value) });
-};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value === "" ? "" : Number(value) });
+  };
   console.log(formData);
 
   return (
