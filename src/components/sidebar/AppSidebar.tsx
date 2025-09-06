@@ -128,11 +128,7 @@ const data = {
       url: "#",
       icon: Icon,
     },
-    {
-      title: "Search",
-      url: "#",
-      icon: Icon,
-    },
+    
   ],
   documents: [
     {
