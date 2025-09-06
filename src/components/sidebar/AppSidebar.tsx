@@ -42,17 +42,22 @@ const data = {
       url: "/me/attendance",
       icon: User,
     },
-    // {
-    //   title: "Inbox",
-    //   url: "/dashboard/inbox",
-    //   icon: Inbox,
-    // },
-    // {
-    //   title: "My Teams",
-    //   url: "#",
-    //   icon: HeartHandshake,
-    // },
-
+    {
+      title: "Inbox",
+      url: "/dashboard/inbox",
+      icon: Inbox,
+    },
+    {
+      title: "My Teams",
+      url: "#",
+      icon: HeartHandshake,
+    },
+ {
+      title: "My Finance",
+      url: "/my_Finances/summary",
+      icon: HeartHandshake,
+    },
+   
     // {
     //   title: "Engage",
     //   url: "#",

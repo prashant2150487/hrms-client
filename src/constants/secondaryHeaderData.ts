@@ -21,6 +21,13 @@ export const secondaryHeaderData = {
   ],
   inbox: {},
   myTeams: [],
+  myFinances:[
+    {
+       title: "Summary",
+      url: "/my_Finances/summary",
+    },
+
+  ],
   admin: [
     {
       title: "Onboard",
@@ -33,6 +40,10 @@ export const secondaryHeaderData = {
     {
       title: "Manage Leave",
       url: "/admin/manage-leaves",
+    },
+     {
+      title: "Leave Policy",
+      url: "/admin/leave-policy",
     },
   ],
 };

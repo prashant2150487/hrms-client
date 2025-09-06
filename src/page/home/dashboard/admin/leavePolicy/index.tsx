@@ -1,4 +1,12 @@
-import { useEffect, useState } from "react";
+import SecondaryHeader from "@/components/SecondaryHeader";
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -7,73 +15,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
-import { Pencil, Trash2 } from "lucide-react";
-import Dashboard from "@/components/sidebar";
-import SecondaryHeader from "@/components/SecondaryHeader";
 import { secondaryHeaderData } from "@/constants/secondaryHeaderData";
-import HolidayPopUp from "./holidayPopup";
 import axiosInstance from "@/lib/axios";
-import DeletePopUp from "./deletePopup";
-interface Holiday {
-  id: string;
-  name: string;
-  date: string;
-  location: string;
-  shift: string;
-  classification: string;
-  description?: string;
-}
-const data = ["Onboard", "Holiday"];
-const Holiday = () => {
-  const [holidays, setHolidays] = useState<Holiday[]>([]);
+import { Pencil, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const LeavePolicy = () => {
+  const [polies, setPolies] = useState([]);
   const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [selectedHoliday, setSelectedHoliday] = useState<Holiday | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [show, setShow] = useState(false);
-  const [deletePopUp, setdeletePopUp] = useState(false);
-  const [holidayId, setHolidayId] = useState<string>("");
-  const [editData, setEditData] = useState({});
-  const [isEdit,setIsEdit]=useState<boolean>(false)
-  const handleClick = () => {
-    setEditData({})
-    setShow(!show);
-  };
-  const handleEdit = (item) => {
-    setShow(true)
-    setEditData(item);
-    setIsEdit(true)
-  };
-  const handleDelete = (Id) => {
-    setdeletePopUp(true);
-    setHolidayId(Id);
-  };
-  const fetchHoilday = async () => {
+  //   const [editData, setEditData] = useState({});
+  //     const [show, setShow] = useState(false);
+  const [selectedHoliday, setSelectedHoliday] = useState<Holiday | null>(null);
+  //   const handleClick = () => {
+  //     setEditData({});
+  //     setShow(!show);
+  //   };
+  const fetchPolies = async () => {
     try {
-      const response = await axiosInstance.get("/v1/holiday/all-holidays");
-      setHolidays(response.data.data);
+      const response = await axiosInstance.get("/v1/policy");
+      console.log(response.data.data);
+      setPolies(response.data?.data)
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    fetchHoilday();
-  }, []);
+  useEffect(()=>{
+    fetchPolies()
+  })
   return (
-    <Dashboard>
+    <>
       <SecondaryHeader data={secondaryHeaderData?.admin} />
       <div className="p-6 space-y-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold text-gray-800">Holidays</h1>
+          <h1 className="text-2xl font-semibold text-gray-800">Leave Policy</h1>
           <div className=" flex items-center gap-2 ">
             <Input
               placeholder="Search holiday name..."
@@ -81,12 +56,9 @@ const Holiday = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <Button
-              onClick={handleClick}
-              className="border border-gray-800 bg-black text-white"
-            >
+            <Button className="border border-gray-800 bg-black text-white">
               {" "}
-              Add Holiday
+              Add Leave Policy
             </Button>
           </div>
         </div>
@@ -103,11 +75,10 @@ const Holiday = () => {
                 </TableHead>
               </TableRow>
             </TableHeader>
-
-            <TableBody className="text-sm">
-              {holidays.map((item) => (
+             <TableBody className="text-sm">
+              {polies?.map((item) => (
                 <TableRow
-                  key={item.id}
+                  key={item._id}
                   className="grid grid-cols-4 hover:bg-gray-100 transition px-3"
                 >
                   <TableCell className="py-3 font-medium flex items-center">
@@ -198,16 +169,8 @@ const Holiday = () => {
           </DrawerContent>
         </Drawer>
       </div>
-      {show && <HolidayPopUp setShow={setShow} editData={editData} isEdit={isEdit} fetchHoilday={fetchHoilday} setIsEdit={setIsEdit}/>}
-      {deletePopUp && (
-        <DeletePopUp
-          setdeletePopUp={setdeletePopUp}
-          holidayId={holidayId}
-          fetchHoilday={fetchHoilday}
-        />
-      )}
-    </Dashboard>
+    </>
   );
 };
 
-export default Holiday;
+export default LeavePolicy;

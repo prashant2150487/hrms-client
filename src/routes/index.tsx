@@ -11,6 +11,8 @@ import ResetPassword from "@/page/resetPassword";
 import CreateNewPassword from "@/page/createPassword";
 import Holiday from "@/page/home/dashboard/admin/holiday";
 import ManageLeaves from "@/page/home/dashboard/admin/manageLeaves";
+import Summary from "@/page/myFinance/summary";
+import LeavePolicy from "@/page/home/dashboard/admin/leavePolicy";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,12 +51,20 @@ const router = createBrowserRouter([
     element: <Holiday />,
   },
   {
-    path:"/admin/manage-leaves",
-    element:
-    <Dashboard>
-      <ManageLeaves/>
-    
-    </Dashboard>
+    path: "/admin/manage-leaves",
+    element: (
+      <Dashboard>
+        <ManageLeaves />
+      </Dashboard>
+    ),
+  },
+  {
+    path: "/admin/leave-policy",
+    element: (
+      <Dashboard>
+        <LeavePolicy />
+      </Dashboard>  
+    ),
   },
   {
     path: "/me/attendance",
@@ -69,6 +79,14 @@ const router = createBrowserRouter([
     element: (
       <Dashboard>
         <Leave />
+      </Dashboard>
+    ),
+  },
+  {
+    path: "/my_Finances/summary",
+    element: (
+      <Dashboard>
+        <Summary />
       </Dashboard>
     ),
   },

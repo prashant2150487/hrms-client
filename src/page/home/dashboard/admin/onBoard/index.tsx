@@ -90,7 +90,7 @@ const Onboard = () => {
     password: "",
     confirmPassword: "",
   });
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const validation = () => {
     const newError = {
       firstName: "",
@@ -147,7 +147,7 @@ const Onboard = () => {
       setViewRole([...viewRole, value]);
     }
   };
-  const handleAddPopup = (title:string):void => {
+  const handleAddPopup = (title: string): void => {
     setPopupTitle(title);
     setShowAddPopup(!showAddPopup);
   };
@@ -176,8 +176,8 @@ const Onboard = () => {
       setDesignations(response.data?.data); // Expecting an array here
     } catch (error) {
       console.log(error);
-    }finally{
-      dispatch(hideLoader())
+    } finally {
+      dispatch(hideLoader());
     }
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -206,9 +206,8 @@ const Onboard = () => {
       setUsers(res.data?.data);
     } catch (err: any) {
       console.log(err.message);
-    }finally{
+    } finally {
       dispatch(hideLoader());
-    
     }
   };
   useEffect(() => {
@@ -236,20 +235,20 @@ const Onboard = () => {
               className="mt-2 flex flex-col gap-3"
             >
               <div className="flex gap-2 items-end justify-end ">
-              <DialogClose asChild>
-                <Button type="button" variant="outline">
-                  Cancel
+                <DialogClose asChild>
+                  <Button type="button" variant="outline">
+                    Cancel
+                  </Button>
+                </DialogClose>
+                <Button
+                  type="submit"
+                  variant="default"
+                  onClick={handleAddCandidate}
+                  className="cursor-pointer bg-black text-white hover:bg-black/80"
+                >
+                  Save changes
                 </Button>
-              </DialogClose>
-              <Button
-                type="submit"
-                variant="default"
-                onClick={handleAddCandidate}
-                className="cursor-pointer bg-black text-white hover:bg-black/80"
-              >
-                Save changes
-              </Button>
-            </div>
+              </div>
               <div className="rounded-md bg-white p-8 shadow-md ">
                 <DialogHeader>
                   <DialogTitle>Basic Information</DialogTitle>
@@ -378,9 +377,9 @@ const Onboard = () => {
                         <div className=" py-2 px-3 shadow border rounded-md">
                           <Plus
                             className="w-4 h-4"
-                            onClick={() => handleAddPopup("Role")}
+                          onClick={() => handleAddPopup("Role")}
                           />
-                        </div>
+                        </div> 
                       </div>
                       <SelectContent className="bg-white">
                         <SelectGroup>
@@ -576,11 +575,10 @@ const Onboard = () => {
                   <div className="grid gap-2">
                     <Label htmlFor="Gender">Gender</Label>
                     <Select
-                    onValueChange={(value)=>{
-                      setFormData({...formData,Gender:value})
-                    }}
+                      onValueChange={(value) => {
+                        setFormData({ ...formData, Gender: value });
+                      }}
                     >
-                      
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a gender" />
                       </SelectTrigger>
@@ -602,9 +600,9 @@ const Onboard = () => {
                   <div className="grid gap-2">
                     <Label htmlFor="Gender">Married status</Label>
                     <Select
-                    onValueChange={(Value)=>{
-                      setFormData({...formData,MarriedStatus:Value})
-                    }} 
+                      onValueChange={(Value) => {
+                        setFormData({ ...formData, MarriedStatus: Value });
+                      }}
                     >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a gender" />
@@ -635,7 +633,12 @@ const Onboard = () => {
                           >
                             Separated
                           </SelectItem>
-                          <SelectItem value="prefer_not_to_say" className="cursor-pointer">Prefer not to say</SelectItem>
+                          <SelectItem
+                            value="prefer_not_to_say"
+                            className="cursor-pointer"
+                          >
+                            Prefer not to say
+                          </SelectItem>
                           <SelectItem value="Other" className="cursor-pointer">
                             Other
                           </SelectItem>
