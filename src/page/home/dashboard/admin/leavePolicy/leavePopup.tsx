@@ -2,16 +2,18 @@ import { hideLoader, showLoader } from "@/features/loader";
 import axiosInstance from "@/lib/axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-
-const LeavePopup = ({ setShowCreatePopup, fetchPolies }) => {
+const LeavePopup = ({
+  setShowCreatePopup,
+  fetchPolies,
+  selectedPolicyData,
+}) => {
   const [formData, setFormData] = useState({
-    paidLeaves: 0,
-    sickLeaves: 0,
-    emergencyLeaves: 0,
-    year: 0,
+    paidLeaves: selectedPolicyData.paidLeaves || 0,
+    sickLeaves: selectedPolicyData.sickLeaves || 0,
+    emergencyLeaves: selectedPolicyData.emergencyLeaves || 0,
+    year: selectedPolicyData.year || 0,
   });
   const dispatch = useDispatch();
-
   const createLeavePolicy = async () => {
     try {
       dispatch(showLoader());

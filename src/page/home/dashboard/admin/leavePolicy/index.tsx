@@ -22,15 +22,18 @@ import { useEffect, useState } from "react";
 import LeavePopup from "./leavePopup";
 import { useDispatch } from "react-redux";
 import { hideLoader, showLoader } from "@/features/loader";
-
+import LeaveCreateConfirm from "./leaveCreateConfirm";
+import { Badge } from "@/components/ui/badge";
 const LeavePolicy = () => {
   const [polies, setPolies] = useState([]);
   const [query, setQuery] = useState<string>("");
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [showCreatePopup, setShowCreatePopup] = useState<boolean>(false);
   const [selectedHoliday, setSelectedHoliday] = useState<Holiday | null>(null);
+  const [leaveCreate, setLeaveCreate] = useState<boolean>(false);
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedPolicyData, setselectedPolicyData] = useState({});
   const dispatch = useDispatch();
-
   const fetchPolies = async () => {
     try {
       dispatch(showLoader());
@@ -45,6 +48,14 @@ const LeavePolicy = () => {
   useEffect(() => {
     fetchPolies();
   }, []);
+  const handleLeaveCreate = (yearCreate) => {
+    setSelectedYear(yearCreate);
+    setLeaveCreate(!leaveCreate);
+  };
+  const handleEdit = (item) => {
+    setShowCreatePopup(true);
+    setselectedPolicyData(item);
+  };
   return (
     <>
       <SecondaryHeader data={secondaryHeaderData?.admin} />
@@ -69,7 +80,7 @@ const LeavePolicy = () => {
         <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
           <Table>
             <TableHeader className="bg-gray-100">
-              <TableRow className="grid grid-cols-6 text-sm text-gray-600 px-3">
+              <TableRow className="grid grid-cols-7 text-sm text-gray-600 px-3">
                 <TableHead className="flex items-center">Year</TableHead>
                 <TableHead className="flex items-center">PaidLeaves</TableHead>
                 <TableHead className="flex items-center">SickLeaves</TableHead>
@@ -79,8 +90,9 @@ const LeavePolicy = () => {
                 <TableHead className="flex items-center">
                   Apply Policy
                 </TableHead>
+                <TableHead className="flex items-center">IsActive</TableHead>
                 <TableHead className="text-right flex items-center justify-end">
-                  IsActive
+                  Action
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -88,7 +100,7 @@ const LeavePolicy = () => {
               {polies?.map((item) => (
                 <TableRow
                   key={item?._id}
-                  className="grid grid-cols-6  transition px-3"
+                  className="grid grid-cols-7  transition px-3"
                 >
                   <TableCell className="py-3 font-medium flex items-center">
                     {item.year}
@@ -99,14 +111,25 @@ const LeavePolicy = () => {
                   <TableCell className="py-3 flex items-center">
                     {item?.sickLeaves}
                   </TableCell>
-
                   <TableCell className="py-3 flex items-center">
                     {item.emergencyLeaves}
                   </TableCell>
                   <TableCell className="flex items-center">
-                    <Button className=" cursor-pointer shadow-md border border-gray-800 bg-black text-white">
+                    <Button
+                      onClick={() => handleLeaveCreate(item.year)}
+                      className=" cursor-pointer shadow-md border border-gray-800 bg-black text-white"
+                    >
                       Apply Leave
                     </Button>
+                  </TableCell>
+                  <TableCell className="py-3 flex items-center">
+                    <Badge
+                      className={`px-2 py-1 rounded-md text-white ${
+                        item.isActive ? "bg-green-600" : "bg-red-600"
+                      }`}
+                    >
+                      {item.isActive ? "Active" : "Inactive"}
+                    </Badge>
                   </TableCell>
                   <TableCell className="py-3 text-right space-x-1">
                     <Button
@@ -129,29 +152,6 @@ const LeavePolicy = () => {
             </TableBody>
           </Table>
         </div>
-        {/* Pagination */}
-        {/* <div className="flex justify-end items-center gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={page === 1}
-            onClick={() => setPage(page - 1)}
-          >
-            Previous
-          </Button>
-          <span className="text-sm text-gray-600">
-            Page {page} of {totalPages}
-          </span>
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={page === totalPages}
-            onClick={() => setPage(page + 1)}
-          >
-            Next
-          </Button>
-        </div> */}
-
         {/* Drawer for Edit */}
         <Drawer
           open={drawerOpen}
@@ -189,6 +189,14 @@ const LeavePolicy = () => {
       {showCreatePopup && (
         <LeavePopup
           setShowCreatePopup={setShowCreatePopup}
+          fetchPolies={fetchPolies}
+          selectedPolicyData={selectedPolicyData}
+        />
+      )}
+      {leaveCreate && (
+        <LeaveCreateConfirm
+          setLeaveCreate={setLeaveCreate}
+          selectedYear={selectedYear}
           fetchPolies={fetchPolies}
         />
       )}
