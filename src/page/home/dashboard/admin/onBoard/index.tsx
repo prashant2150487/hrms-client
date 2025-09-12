@@ -153,7 +153,7 @@ const Onboard = () => {
   };
   const fetchDepartmentData = async () => {
     try {
-      const response = await axiosInstance.get("/v1/admin/users/departments");
+      const response = await axiosInstance.get("/v1/department");
       setDepartments(response.data.data);
     } catch (error) {
       console.log(error);
@@ -171,7 +171,7 @@ const Onboard = () => {
     try {
       dispatch(showLoader());
       const response = await axiosInstance.get(
-        `/v1/admin/users/departments/${formData.department}/designations`
+        `/v1/department/${formData.department}/designation`
       );
       setDesignations(response.data?.data); // Expecting an array here
     } catch (error) {
@@ -214,7 +214,7 @@ const Onboard = () => {
     fetchUserData();
     fetchRoleData();
     fetchDepartmentData();
-    fetchDataDesgination();
+    // fetchDataDesgination();
   }, []);
   return (
     <Dashboard>
@@ -377,9 +377,9 @@ const Onboard = () => {
                         <div className=" py-2 px-3 shadow border rounded-md">
                           <Plus
                             className="w-4 h-4"
-                          onClick={() => handleAddPopup("Role")}
+                            onClick={() => handleAddPopup("Role")}
                           />
-                        </div> 
+                        </div>
                       </div>
                       <SelectContent className="bg-white">
                         <SelectGroup>

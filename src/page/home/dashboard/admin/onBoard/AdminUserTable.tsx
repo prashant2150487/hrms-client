@@ -1,16 +1,9 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,
 } from "@/components/ui/table";
 import DropDownAction from "./DropDownAction";
 import { Badge } from "@/components/ui/badge";
 const AdminUserTable = ({ users, fetchUserData }) => {
-
   return (
     <div>
       <Table>
