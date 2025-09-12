@@ -1,7 +1,7 @@
 import type { RootState } from "@/store";
 import { useSelector } from "react-redux";
 
-const Spinner = (props) => {
+const Spinner = (props: any) => {
   const isLoading = useSelector((state: RootState) => state.loader.isLoading);
   if (!isLoading) return null;
   return (

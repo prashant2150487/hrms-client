@@ -1,6 +1,8 @@
+import { clearUser } from "@/features/user";
+import { store } from "@/store";
 import axios from "axios";
 
-const rawBaseURL ="https://hrms-be-mu.vercel.app/";
+const rawBaseURL = "https://hrms-be-mu.vercel.app/";
 const baseURL = `${rawBaseURL.replace(/\/$/, "")}/api`;
 
 const axiosInstance = axios.create({
@@ -16,6 +18,21 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+// Response interceptor: handle unauthorized
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (
+      error?.response?.data?.message === "Not authorized to access this route"
+    ) {
+      localStorage.removeItem("token");
+      store.dispatch(clearUser());
+      // optional: force redirect to login
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default axiosInstance;
