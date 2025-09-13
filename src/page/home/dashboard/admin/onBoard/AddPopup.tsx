@@ -3,19 +3,35 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { X } from "lucide-react";
 import { useState } from "react";
+import axiosInstance from "@/lib/axios";
 interface Props {
   setShowAddPopup: (value: boolean) => void;
   showAddPopup: boolean;
   popupTitle: string;
-  handleUpdate: (value1: string, value2: string) => void;
+  fetchDepartmentData: () => void;
 }
 const AddPopup = ({
   setShowAddPopup,
   showAddPopup,
   popupTitle,
-  handleUpdate,
+  fetchDepartmentData,
 }: Props) => {
   const [name, setName] = useState<string>("");
+  const handleAddNewDepartment = async () => {
+    try {
+      const description = "this is IT department";
+      await axiosInstance.post("/v1/department", {
+        name,
+        description,
+      });
+      fetchDepartmentData();
+      setShowAddPopup(false);
+      // Optionally handle response data
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
       <div className="w-[600px] bg-white border border-gray-200 rounded-2xl shadow-lg p-6 space-y-6">
@@ -61,11 +77,7 @@ const AddPopup = ({
           </Button>
           <Button
             className=" shadow-md cursor-pointer"
-            onClick={() => {
-              setShowAddPopup(false);
-              handleUpdate(popupTitle, name);
-              
-            }}
+            onClick={handleAddNewDepartment}
           >
             Save Changes
           </Button>

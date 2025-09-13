@@ -139,9 +139,7 @@ const Onboard = () => {
     value: string
   ) => {
     console.log(stateName, value);
-    if (stateName === "department") {
-      setDepartments([...departments, value]);
-    } else if (stateName == "designation") {
+    if (stateName == "designation") {
       setDesignations([...designations, value]);
     } else if (stateName == "role") {
       setViewRole([...viewRole, value]);
@@ -415,7 +413,7 @@ const Onboard = () => {
                             showAddPopup={showAddPopup}
                             setShowAddPopup={setShowAddPopup}
                             popupTitle={popupTitle}
-                            handleUpdate={handleUpdate}
+                            fetchDepartmentData={fetchDepartmentData}
                           />
                         )}
                       </div>
