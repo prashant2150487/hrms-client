@@ -154,7 +154,7 @@ const Onboard = () => {
   const fetchDepartmentData = async () => {
     try {
       const response = await axiosInstance.get("/v1/department");
-      setDepartments(response.data.data);
+      setDepartments(response.data.data?.map((item,index)=>item.name));
     } catch (error) {
       console.log(error);
     }
